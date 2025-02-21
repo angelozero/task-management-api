@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  mongo:
+    # to run on a MacOs Sonoma 14.2.1 Apple M1 add "platform: linux/amd64"
+    platform: linux/amd64
+    image: mongo:5.0
+    container_name: mongo_container_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: terra
+#      MONGO_INITDB_DATABASE: task-management-db
+
+volumes:
+  mongo_data:
+
+# Para iniciar: docker-compose up -d
