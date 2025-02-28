@@ -12,4 +12,6 @@ public interface TaskDataProviderMapper {
     List<Task> toTaskList(List<TaskEntity> taskEntityList);
 
     TaskEntity toTaskEntity(Task task);
+
+    Task toTask(TaskEntity taskEntity);
 }

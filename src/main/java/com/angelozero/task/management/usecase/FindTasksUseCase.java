@@ -11,19 +11,16 @@ import java.util.List;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class SaveTaskUseCase {
+public class FindTasksUseCase {
 
-    private final FindTasksUseCase findTasksUseCase;
     private final TaskGateway taskGateway;
 
-    public List<Task> execute(Task task) {
-        log.info("Saving a Task");
-
-        taskGateway.save(task);
+    public List<Task> execute() {
+        log.info("Getting all Tasks");
 
         var tasks = taskGateway.getAll();
 
-        log.info("Task saved with success");
+        log.info("Tasks returned with success");
         return tasks;
     }
 }

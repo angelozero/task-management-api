@@ -6,21 +6,24 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Slf4j
 @Service
 @AllArgsConstructor
-public class GetAllTasksUseCase {
+public class FindTaskByIdUseCase {
 
     private final TaskGateway taskGateway;
 
-    public List<Task> execute() {
-        log.info("Getting all tasks");
-        var tasks = taskGateway.getAll();
+    public Task execute(String id) {
+        log.info("Getting a Task by id: {}", id);
 
+        var task = taskGateway.findById(id);
 
-        log.info("Tasks returned with success");
-        return tasks;
+        if (task == null) {
+            log.info("No Task was found");
+            return null;
+        }
+
+        log.info("Task was found with success");
+        return task;
     }
 }
