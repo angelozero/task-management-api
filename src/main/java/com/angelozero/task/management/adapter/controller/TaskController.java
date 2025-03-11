@@ -25,7 +25,7 @@ public class TaskController {
     private final DeleteTaskUseCase deleteTaskUseCase;
 
     private final TaskRequestMapper taskRequestMapper;
-    private final PagedRequestMapper<TaskResponse> pagedRequestMapper;
+
 
     @GetMapping("/{id}")
     public ResponseEntity<TaskResponse> findTasks(@PathVariable String id) {
@@ -44,7 +44,7 @@ public class TaskController {
                                                                  @RequestParam(required = false) Boolean isCompleted) {
         var pagedTasks = findTasksUseCase.execute(page, size, sortField, isCompleted);
         var taskResponseList = taskRequestMapper.toTaskResponseList(pagedTasks.getContent());
-        var pagedResponse = pagedRequestMapper.toPagedResponse(taskResponseList, pagedTasks);
+        var pagedResponse = PagedRequestMapper.toPagedResponse(taskResponseList, pagedTasks);
 
         return ResponseEntity.ok(pagedResponse);
     }
