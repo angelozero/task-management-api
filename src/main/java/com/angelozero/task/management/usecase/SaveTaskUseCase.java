@@ -13,17 +13,13 @@ import java.util.List;
 @AllArgsConstructor
 public class SaveTaskUseCase {
 
-    private final FindTasksUseCase findTasksUseCase;
     private final TaskGateway taskGateway;
 
-    public List<Task> execute(Task task) {
+    public void execute(Task task) {
         log.info("Saving a Task");
 
         taskGateway.save(task);
 
-        var tasks = taskGateway.getAll();
-
         log.info("Task saved with success");
-        return tasks;
     }
 }

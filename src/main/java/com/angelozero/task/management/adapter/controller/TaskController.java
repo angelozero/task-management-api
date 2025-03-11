@@ -1,14 +1,16 @@
 package com.angelozero.task.management.adapter.controller;
 
+import com.angelozero.task.management.adapter.controller.mapper.PagedRequestMapper;
 import com.angelozero.task.management.adapter.controller.mapper.TaskRequestMapper;
 import com.angelozero.task.management.adapter.controller.rest.request.TaskRequest;
+import com.angelozero.task.management.adapter.controller.rest.response.PagedResponse;
 import com.angelozero.task.management.adapter.controller.rest.response.TaskResponse;
 import com.angelozero.task.management.usecase.*;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,6 +25,7 @@ public class TaskController {
     private final DeleteTaskUseCase deleteTaskUseCase;
 
     private final TaskRequestMapper taskRequestMapper;
+    private final PagedRequestMapper<TaskResponse> pagedRequestMapper;
 
     @GetMapping("/{id}")
     public ResponseEntity<TaskResponse> findTasks(@PathVariable String id) {
@@ -35,22 +38,22 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TaskResponse>> findTasks() {
-        var taskList = findTasksUseCase.execute();
-        var taskResponseList = taskRequestMapper.toTaskResponseList(taskList);
+    public ResponseEntity<PagedResponse<TaskResponse>> findTasks(@RequestParam(defaultValue = "0") int page,
+                                                                 @RequestParam(defaultValue = "10") int size,
+                                                                 @RequestParam(required = false) String sortField) {
+        var pagedTasks = findTasksUseCase.execute(page, size, sortField);
+        var taskResponseList = taskRequestMapper.toTaskResponseList(pagedTasks.getContent());
+        var pagedResponse = pagedRequestMapper.toPagedResponse(taskResponseList, pagedTasks);
 
-        return Optional.ofNullable(taskResponseList)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.noContent().build());
+        return ResponseEntity.ok(pagedResponse);
     }
 
     @PostMapping
-    public ResponseEntity<List<TaskResponse>> saveTask(@RequestBody TaskRequest taskRequest) {
+    public ResponseEntity<Void> saveTask(@RequestBody TaskRequest taskRequest) {
         var task = taskRequestMapper.toTask(taskRequest);
-        var taskList = saveTaskUseCase.execute(task);
-        var taskResponse = taskRequestMapper.toTaskResponseList(taskList);
+        saveTaskUseCase.execute(task);
 
-        return ResponseEntity.ok(taskResponse);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

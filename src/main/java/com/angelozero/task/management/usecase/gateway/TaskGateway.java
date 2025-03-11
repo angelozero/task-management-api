@@ -1,14 +1,13 @@
 package com.angelozero.task.management.usecase.gateway;
 
 import com.angelozero.task.management.entity.Task;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface TaskGateway {
 
     Task findById(String id);
 
-    List<Task> getAll();
+    Page<Task> getAll(int page, int size, String sortField);
 
     void save(Task task);
 

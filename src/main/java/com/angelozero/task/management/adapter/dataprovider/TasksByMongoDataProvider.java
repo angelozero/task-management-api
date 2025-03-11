@@ -5,9 +5,12 @@ import com.angelozero.task.management.adapter.dataprovider.mapper.TaskDataProvid
 import com.angelozero.task.management.entity.Task;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -24,10 +27,12 @@ public class TasksByMongoDataProvider implements TaskGateway {
     }
 
     @Override
-    public List<Task> getAll() {
-        var taskEntityList = taskRepository.findAll();
+    public Page<Task> getAll(int page, int size, String sortField) {
+        var pageable = StringUtils.isBlank(sortField) ? PageRequest.of(page, size) : PageRequest.of(page, size, Sort.by(sortField));
+        var pagedTasksEntity = taskRepository.findAll(pageable);
+        var tasks = taskDataProviderMapper.toTaskList(pagedTasksEntity.getContent());
 
-        return taskDataProviderMapper.toTaskList(taskEntityList);
+        return new PageImpl<>(tasks, pageable, pagedTasksEntity.getTotalElements());
     }
 
     @Override
