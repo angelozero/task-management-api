@@ -9,7 +9,7 @@ public record Task(String id,
 
     public Task {
         if (StringUtils.isBlank(description)) {
-            throw new TaskException("A Task must have a \"description\" value");
+            throw new TaskException("A Task must have a 'description' value");
         }
     }
 }
