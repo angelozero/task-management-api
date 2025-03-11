@@ -16,12 +16,12 @@ public class FindTasksUseCase {
 
     private final TaskGateway taskGateway;
 
-    public Page<Task> execute(int page, int size, String sortField) {
+    public Page<Task> execute(int page, int size, String sortField, Boolean isCompleted) {
         log.info("Getting pageable Tasks");
 
         var validField = StringUtils.isBlank(sortField) ? null : FieldValidator.validateFieldName(Task.class, sortField);
 
-        var tasks = taskGateway.getAll(page, size, validField);
+        var tasks = taskGateway.getAll(page, size, validField, isCompleted);
 
         log.info("Tasks returned with success");
         return tasks;

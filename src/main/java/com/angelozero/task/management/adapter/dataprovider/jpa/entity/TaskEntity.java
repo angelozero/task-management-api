@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public record TaskEntity(@Id String id,
                          String description,
-                         Boolean completed) {
+                         boolean completed) {
 }

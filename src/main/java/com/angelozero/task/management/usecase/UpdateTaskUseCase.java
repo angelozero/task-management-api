@@ -4,6 +4,7 @@ import com.angelozero.task.management.entity.Task;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -37,16 +38,8 @@ public class UpdateTaskUseCase {
     }
 
     private Task updateTaskValues(String id, Task task, Task taskFounded) {
-        var description = "";
-        var completed = false;
-
-        if (!task.description().equalsIgnoreCase(taskFounded.description())) {
-            description = task.description();
-        }
-
-        if (!task.completed().equals(taskFounded.completed())) {
-            completed = task.completed();
-        }
+        var description = StringUtils.isBlank(task.description()) ? taskFounded.description() : task.description();
+        var completed = task.completed() != null ? task.completed() : taskFounded.completed();
 
         return new Task(id, description, completed);
     }

@@ -1,5 +1,6 @@
 package com.angelozero.task.management.adapter.dataprovider;
 
+import com.angelozero.task.management.adapter.dataprovider.jpa.entity.TaskEntity;
 import com.angelozero.task.management.adapter.dataprovider.jpa.repository.TaskRepository;
 import com.angelozero.task.management.adapter.dataprovider.mapper.TaskDataProviderMapper;
 import com.angelozero.task.management.entity.Task;
@@ -27,9 +28,17 @@ public class TasksByMongoDataProvider implements TaskGateway {
     }
 
     @Override
-    public Page<Task> getAll(int page, int size, String sortField) {
+    public Page<Task> getAll(int page, int size, String sortField, Boolean isCompleted) {
+        Page<TaskEntity> pagedTasksEntity;
         var pageable = StringUtils.isBlank(sortField) ? PageRequest.of(page, size) : PageRequest.of(page, size, Sort.by(sortField));
-        var pagedTasksEntity = taskRepository.findAll(pageable);
+
+        if (isCompleted != null) {
+            pagedTasksEntity = taskRepository.findByCompleted(isCompleted, pageable);
+
+        } else {
+            pagedTasksEntity = taskRepository.findAll(pageable);
+        }
+
         var tasks = taskDataProviderMapper.toTaskList(pagedTasksEntity.getContent());
 
         return new PageImpl<>(tasks, pageable, pagedTasksEntity.getTotalElements());
