@@ -1,5 +1,6 @@
 package com.angelozero.task.management.adapter.controller.handler;
 
+import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.exception.FieldValidatorException;
 import com.angelozero.task.management.usecase.exception.TaskException;
 import org.springframework.http.HttpStatus;
@@ -11,24 +12,34 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<Object> handleResourceBusinessException(BusinessException ex) {
+        return generateUnprocessableEntityResponse(ex);
+    }
+
     @ExceptionHandler(TaskException.class)
     public ResponseEntity<Object> handleResourceTaskException(TaskException ex) {
-        return new ResponseEntity<>(
-                new ErrorData(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY.value()),
-                HttpStatus.UNPROCESSABLE_ENTITY
-        );
+        return generateUnprocessableEntityResponse(ex);
     }
 
     @ExceptionHandler(FieldValidatorException.class)
     public ResponseEntity<Object> handleResourceFieldValidatorException(FieldValidatorException ex) {
+        return generateUnprocessableEntityResponse(ex);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleGeneralException(Exception ex) {
+        return generateInternalServerErrorResponse(ex);
+    }
+
+    private ResponseEntity<Object> generateUnprocessableEntityResponse(Exception ex) {
         return new ResponseEntity<>(
                 new ErrorData(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY.value()),
                 HttpStatus.UNPROCESSABLE_ENTITY
         );
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleGeneralException(Exception ex) {
+    private ResponseEntity<Object> generateInternalServerErrorResponse(Exception ex) {
         return new ResponseEntity<>(
                 new ErrorData(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()),
                 HttpStatus.INTERNAL_SERVER_ERROR

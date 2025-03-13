@@ -28,7 +28,7 @@ public class TasksByMongoDataProvider implements TaskGateway {
     }
 
     @Override
-    public Page<Task> getAll(int page, int size, String sortField, Boolean isCompleted) {
+    public Page<Task> findAll(int page, int size, String sortField, Boolean isCompleted) {
         Page<TaskEntity> pagedTasksEntity;
         var pageable = StringUtils.isBlank(sortField) ? PageRequest.of(page, size) : PageRequest.of(page, size, Sort.by(sortField));
 

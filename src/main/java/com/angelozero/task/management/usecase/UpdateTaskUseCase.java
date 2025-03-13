@@ -1,6 +1,7 @@
 package com.angelozero.task.management.usecase;
 
 import com.angelozero.task.management.entity.Task;
+import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,9 +16,14 @@ public class UpdateTaskUseCase {
     private final TaskGateway taskGateway;
 
     public Task execute(String id, Task task) {
-        if (id == null) {
-            log.info("No Task was informed to updated");
-            return null;
+        if (StringUtils.isBlank(id)) {
+            log.error("No Task ID was informed to be updated");
+            throw new BusinessException("No Task ID was informed to be updated");
+        }
+
+        if (task == null) {
+            log.error("No Task data was informed to be updated");
+            throw new BusinessException("No Task data was informed to be updated");
         }
 
         log.info("Updating the Task - ID: {}, with values {}", id, task);
@@ -25,7 +31,7 @@ public class UpdateTaskUseCase {
         var taskFounded = taskGateway.findById(id);
 
         if (taskFounded == null) {
-            log.info("No Task was found");
+            log.info("No Task was found to be updated");
             return null;
         }
 
@@ -38,8 +44,10 @@ public class UpdateTaskUseCase {
     }
 
     private Task updateTaskValues(String id, Task task, Task taskFounded) {
-        var description = StringUtils.isBlank(task.description()) ? taskFounded.description() : task.description();
-        var completed = task.completed() != null ? task.completed() : taskFounded.completed();
+        var isSameTaskDescription = task.description().equals(taskFounded.description());
+
+        var description = isSameTaskDescription ? taskFounded.description() : task.description();
+        var completed = task.completed() == null ? taskFounded.completed() : task.completed();
 
         return new Task(id, description, completed);
     }

@@ -7,7 +7,7 @@ public interface TaskGateway {
 
     Task findById(String id);
 
-    Page<Task> getAll(int page, int size, String sortField, Boolean isCompleted);
+    Page<Task> findAll(int page, int size, String sortField, Boolean isCompleted);
 
     void save(Task task);
 
