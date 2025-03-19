@@ -1,6 +1,5 @@
 package com.angelozero.task.management.entity;
 
-import com.angelozero.task.management.usecase.exception.FieldValidatorException;
 import com.angelozero.task.management.usecase.exception.TaskException;
 import org.apache.commons.lang3.StringUtils;
 

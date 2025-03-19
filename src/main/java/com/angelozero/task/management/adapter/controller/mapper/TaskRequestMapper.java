@@ -4,12 +4,14 @@ import com.angelozero.task.management.adapter.controller.rest.request.TaskReques
 import com.angelozero.task.management.adapter.controller.rest.response.TaskResponse;
 import com.angelozero.task.management.entity.Task;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface TaskRequestMapper {
 
+    @Mapping(target = "id", expression = "java(null)")
     Task toTask(TaskRequest taskRequest);
 
     TaskResponse toTaskResponse(Task task);

@@ -2,10 +2,8 @@ package com.angelozero.task.management.entity.unit.usecase;
 
 import com.angelozero.task.management.entity.Task;
 import com.angelozero.task.management.usecase.DeleteTaskUseCase;
-import com.angelozero.task.management.usecase.FindTaskByIdUseCase;
 import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;

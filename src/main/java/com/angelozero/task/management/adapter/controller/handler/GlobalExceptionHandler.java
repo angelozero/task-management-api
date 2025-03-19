@@ -2,6 +2,7 @@ package com.angelozero.task.management.adapter.controller.handler;
 
 import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.exception.FieldValidatorException;
+import com.angelozero.task.management.usecase.exception.RestDataProviderException;
 import com.angelozero.task.management.usecase.exception.TaskException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handleResourceBusinessException(BusinessException ex) {
+        return generateUnprocessableEntityResponse(ex);
+    }
+
+    @ExceptionHandler(RestDataProviderException.class)
+    public ResponseEntity<Object> handleResourceRestDataProviderException(RestDataProviderException ex) {
         return generateUnprocessableEntityResponse(ex);
     }
 
