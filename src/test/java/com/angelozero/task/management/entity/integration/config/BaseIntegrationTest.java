@@ -31,7 +31,7 @@ public class BaseIntegrationTest {
      * Testcontainer - MongoDB
      */
     @ClassRule
-    public static MongoDBContainer container = new MongoDBContainer("mongo:latest")
+    public static MongoDBContainer container = new MongoDBContainer("mongo:4.4.6")
             .withExposedPorts(27017);
 
 

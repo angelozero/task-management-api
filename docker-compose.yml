@@ -5,7 +5,7 @@ services:
     # to run on a MacOs Sonoma 14.2.1 Apple M1 add "platform: linux/amd64"
     # platform: linux/amd64
     # to run on Ubuntu 24.04.2 LTS use the command docker compose up -d
-    image: mongo:5.0
+    image: mongo:4.4.6
     container_name: mongo_container_db
     ports:
       - "27017:27017"
