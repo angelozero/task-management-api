@@ -1,4 +1,4 @@
-package com.angelozero.task.management.usecase;
+package com.angelozero.task.management.usecase.services.task;
 
 import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;

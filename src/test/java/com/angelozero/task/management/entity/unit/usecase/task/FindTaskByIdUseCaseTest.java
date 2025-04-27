@@ -1,10 +1,9 @@
-package com.angelozero.task.management.entity.unit.usecase;
+package com.angelozero.task.management.entity.unit.usecase.task;
 
 import com.angelozero.task.management.entity.Task;
-import com.angelozero.task.management.usecase.FindTaskByIdUseCase;
+import com.angelozero.task.management.usecase.services.task.FindTaskByIdUseCase;
 import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,8 +49,8 @@ public class FindTaskByIdUseCaseTest {
     }
 
     @Test
-    @DisplayName("Should fail to delete a task without id")
-    public void shouldFailToUpdateTaskWithoutId() {
+    @DisplayName("Should fail to find a person without id")
+    public void shouldFailToFindPersonWithoutId() {
         var exception = assertThrows(BusinessException.class,
                 () -> findTaskByIdUseCase.execute(null));
 

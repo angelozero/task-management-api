@@ -5,7 +5,7 @@ import com.angelozero.task.management.adapter.controller.mapper.TaskRequestMappe
 import com.angelozero.task.management.adapter.controller.rest.request.TaskRequest;
 import com.angelozero.task.management.adapter.controller.rest.response.PagedResponse;
 import com.angelozero.task.management.adapter.controller.rest.response.TaskResponse;
-import com.angelozero.task.management.usecase.*;
+import com.angelozero.task.management.usecase.services.task.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

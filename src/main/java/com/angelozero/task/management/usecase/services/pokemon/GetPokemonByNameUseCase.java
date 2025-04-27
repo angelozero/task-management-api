@@ -1,4 +1,4 @@
-package com.angelozero.task.management.usecase;
+package com.angelozero.task.management.usecase.services.pokemon;
 
 import com.angelozero.task.management.entity.Pokemon;
 import com.angelozero.task.management.usecase.exception.BusinessException;

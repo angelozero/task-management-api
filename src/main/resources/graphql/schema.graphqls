@@ -1,0 +1,21 @@
+type Mutation {
+    savePerson(personInput: PersonInput): PersonOutput
+}
+
+type Query {
+    personById(id: String): PersonOutput
+    personByEmail(email: String): PersonOutput
+}
+
+input PersonInput {
+    name: String!,
+    email: String!,
+    profileInfo: String
+}
+
+type PersonOutput {
+    id: String!,
+    name: String,
+    email: String,
+    profileInfo: String
+}

@@ -49,6 +49,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- gRPC / GraphQL -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-graphql</artifactId>
+        </dependency>
+
         <!--  String Utils -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -70,7 +76,7 @@
             <version>1.5.5.Final</version>
         </dependency>
 
-        <!-- testcontainer -->
+        <!-- test container -->
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
@@ -78,7 +84,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- testcontainer with mongodb-->
+        <!-- test container with mongodb-->
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>mongodb</artifactId>

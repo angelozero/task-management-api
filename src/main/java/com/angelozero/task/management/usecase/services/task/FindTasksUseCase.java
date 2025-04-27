@@ -1,4 +1,4 @@
-package com.angelozero.task.management.usecase;
+package com.angelozero.task.management.usecase.services.task;
 
 import com.angelozero.task.management.entity.Task;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;

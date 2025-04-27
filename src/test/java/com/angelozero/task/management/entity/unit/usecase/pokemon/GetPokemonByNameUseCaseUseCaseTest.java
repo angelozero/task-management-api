@@ -1,7 +1,7 @@
-package com.angelozero.task.management.entity.unit.usecase;
+package com.angelozero.task.management.entity.unit.usecase.pokemon;
 
 import com.angelozero.task.management.entity.Pokemon;
-import com.angelozero.task.management.usecase.GetPokemonByNameUseCase;
+import com.angelozero.task.management.usecase.services.pokemon.GetPokemonByNameUseCase;
 import com.angelozero.task.management.usecase.gateway.PokemonGateway;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

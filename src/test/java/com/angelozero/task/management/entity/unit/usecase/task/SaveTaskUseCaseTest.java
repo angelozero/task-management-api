@@ -1,7 +1,7 @@
-package com.angelozero.task.management.entity.unit.usecase;
+package com.angelozero.task.management.entity.unit.usecase.task;
 
 import com.angelozero.task.management.entity.Task;
-import com.angelozero.task.management.usecase.SaveTaskUseCase;
+import com.angelozero.task.management.usecase.services.task.SaveTaskUseCase;
 import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;
 import org.junit.jupiter.api.Assertions;
@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,7 +37,7 @@ public class SaveTaskUseCaseTest {
 
     @Test
     @DisplayName("Should fail to save a task without data")
-    public void shouldFailToUpdateTaskWithoutId() {
+    public void shouldFailToSaveTaskWithoutData() {
         var exception = assertThrows(BusinessException.class,
                 () -> saveTaskUseCase.execute(null));
 

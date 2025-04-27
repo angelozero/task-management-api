@@ -1,7 +1,7 @@
-package com.angelozero.task.management.entity.unit.usecase;
+package com.angelozero.task.management.entity.unit.usecase.task;
 
 import com.angelozero.task.management.entity.Task;
-import com.angelozero.task.management.usecase.UpdateTaskUseCase;
+import com.angelozero.task.management.usecase.services.task.UpdateTaskUseCase;
 import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;
 import org.junit.jupiter.api.DisplayName;
