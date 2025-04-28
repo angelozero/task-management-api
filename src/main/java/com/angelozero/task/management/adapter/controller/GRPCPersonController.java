@@ -38,7 +38,7 @@ public class GRPCPersonController {
 
     @QueryMapping()
     PersonOutput personByEmail(@Argument String email) {
-        var person = findPersonByEmailUseCase.execute(email );
+        var person = findPersonByEmailUseCase.execute(email);
         return personDataTransferMapper.toPersonOutput(person);
     }
 }

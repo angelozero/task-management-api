@@ -1,4 +1,6 @@
 package com.angelozero.task.management.adapter.controller.datatransfer;
 
-public record PersonInput(String name, String email, String profileInfo) {
+import java.util.List;
+
+public record PersonInput(String name, String email, String profileInfo, List<TaskInput> taskList) {
 }

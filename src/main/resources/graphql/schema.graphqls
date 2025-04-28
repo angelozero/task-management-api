@@ -10,12 +10,26 @@ type Query {
 input PersonInput {
     name: String!,
     email: String!,
-    profileInfo: String
+    profileInfo: String,
+    taskList: [TaskInput]
+}
+
+input TaskInput {
+    id: String,
+    description: String,
+    completed: Boolean
 }
 
 type PersonOutput {
     id: String!,
     name: String,
     email: String,
-    profileInfo: String
+    profileInfo: String,
+    taskList: [TaskOutput]
+}
+
+type TaskOutput {
+    id: String,
+    description: String,
+    completed: Boolean
 }

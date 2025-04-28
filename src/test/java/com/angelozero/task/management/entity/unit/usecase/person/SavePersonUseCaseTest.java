@@ -13,6 +13,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -29,7 +32,8 @@ public class SavePersonUseCaseTest {
     @Test
     @DisplayName("Should save a Person with success")
     public void shouldSavePersonWithSuccess() {
-        var personMock = new Person("", "name", "email", "profileInfo");
+        var taskListMock = List.of(new Task("id", "description", true));
+        var personMock = new Person("", "name", "email", "profileInfo", taskListMock);
 
         doNothing().when(personGateway).save(any(Person.class));
 

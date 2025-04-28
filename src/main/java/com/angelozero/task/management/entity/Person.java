@@ -1,4 +1,6 @@
 package com.angelozero.task.management.entity;
 
-public record Person(String id, String name, String email, String profileInfo) {
+import java.util.List;
+
+public record Person(String id, String name, String email, String profileInfo, List<Task> taskList) {
 }

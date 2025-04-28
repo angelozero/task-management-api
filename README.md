@@ -14,7 +14,15 @@
   - Mutation
     ```graphql
     mutation {
-      savePerson(personInput: { name: "angelo", email: "angelo@zero.com", profileInfo: "this is a test" } ){
+      savePerson(personInput: {
+        name: "angelo",
+        email: "angelo@zero.com",
+        profileInfo: "this is a test",
+        taskList: [
+          { id: null, description: "Task 1", completed: false },
+          { id: null, description: "Task 2", completed: true },
+          { id: null, description: "Task 3", completed: false }
+        ]}) {
         id
         email
       }
@@ -31,12 +39,16 @@
       }
     }
     ```
-    ![graphql-mutation.png](images/graphql-mutation.png)
   - Query
     ```graphql
     query {
       personByEmail(email: "angelo@zero.com"){
         profileInfo
+        taskList {
+          id
+          description
+          completed
+        }
       }
     }
     ```
@@ -45,12 +57,29 @@
     {
       "data": {
         "personByEmail": {
-          "profileInfo": "this is a test"
+          "profileInfo": "this is a test",
+          "taskList": [
+            {
+              "id": "680ee3f6cb7f6367f7defe8c",
+              "description": "Task 1",
+              "completed": false
+            },
+            {
+              "id": "680ee3f6cb7f6367f7defe8d",
+              "description": "Task 2",
+              "completed": true
+            },
+            {
+              "id": "680ee3f6cb7f6367f7defe8e",
+              "description": "Task 3",
+              "completed": false
+            }
+          ]
         }
       }
     }
     ```
-  - ![graphql-query.png](images/graphql-query.png)
+  - ![graphql.png](images/graphql.png)
 
 
 - Next steps

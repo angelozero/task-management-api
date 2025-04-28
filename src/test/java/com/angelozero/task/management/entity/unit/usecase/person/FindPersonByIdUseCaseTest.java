@@ -12,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -28,7 +30,8 @@ public class FindPersonByIdUseCaseTest {
     @Test
     @DisplayName("Should find a person by id with success")
     public void shouldFindPersonByIdWithSuccess() {
-        var personMock = new Person("", "name", "email", "profileInfo");
+        var taskListMock = List.of(new Task("id", "description", true));
+        var personMock = new Person("", "name", "email", "profileInfo", taskListMock);
 
         when(personGateway.findById(anyString())).thenReturn(personMock);
 

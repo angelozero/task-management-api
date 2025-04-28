@@ -21,7 +21,6 @@ public class SavePersonUseCase {
         }
 
         log.info("Saving a Person");
-
         personGateway.save(person);
 
         log.info("Person saved with success");

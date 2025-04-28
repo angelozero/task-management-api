@@ -13,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class TasksByMongoDataProvider implements TaskGateway {
@@ -26,6 +28,14 @@ public class TasksByMongoDataProvider implements TaskGateway {
 
         return taskDataProviderMapper.toTask(taskEntity);
     }
+
+    @Override
+    public List<Task> findByIds(List<String> ids) {
+        var taskEntityList = taskRepository.findByIdIn(ids);
+
+        return taskDataProviderMapper.toTaskList(taskEntityList);
+    }
+
 
     @Override
     public Page<Task> findAll(int page, int size, String sortField, Boolean isCompleted) {
@@ -47,8 +57,13 @@ public class TasksByMongoDataProvider implements TaskGateway {
     @Override
     public void save(Task task) {
         var taskEntity = taskDataProviderMapper.toTaskEntity(task);
-
         taskRepository.save(taskEntity);
+    }
+
+    @Override
+    public void saveAll(List<Task> taskList) {
+        var taskEntityList = taskDataProviderMapper.toTaskEntityList(taskList);
+        taskRepository.saveAll(taskEntityList);
     }
 
     @Override
@@ -62,7 +77,6 @@ public class TasksByMongoDataProvider implements TaskGateway {
     @Override
     public void delete(Task task) {
         var taskEntity = taskDataProviderMapper.toTaskEntity(task);
-
         taskRepository.delete(taskEntity);
     }
 }

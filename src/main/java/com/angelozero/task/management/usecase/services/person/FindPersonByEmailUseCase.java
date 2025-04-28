@@ -3,6 +3,7 @@ package com.angelozero.task.management.usecase.services.person;
 import com.angelozero.task.management.entity.Person;
 import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.gateway.PersonGateway;
+import com.angelozero.task.management.usecase.gateway.TaskGateway;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

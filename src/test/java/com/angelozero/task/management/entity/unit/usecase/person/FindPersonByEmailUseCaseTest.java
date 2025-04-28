@@ -1,6 +1,7 @@
 package com.angelozero.task.management.entity.unit.usecase.person;
 
 import com.angelozero.task.management.entity.Person;
+import com.angelozero.task.management.entity.Task;
 import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.gateway.PersonGateway;
 import com.angelozero.task.management.usecase.services.person.FindPersonByEmailUseCase;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -27,7 +30,8 @@ public class FindPersonByEmailUseCaseTest {
     @Test
     @DisplayName("Should find a person by email with success")
     public void shouldFindPersonByEmailWithSuccess() {
-        var personMock = new Person("", "name", "email", "profileInfo");
+        var taskListMock = List.of(new Task("id", "description", true));
+        var personMock = new Person("", "name", "email", "profileInfo", taskListMock);
 
         when(personGateway.findByEmail(anyString())).thenReturn(personMock);
 

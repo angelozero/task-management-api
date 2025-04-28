@@ -19,6 +19,4 @@ public interface PersonDataTransferMapper {
 
     PersonOutput toPersonOutput(Person person);
 
-    List<PersonOutput> toPersonOutputList(List<Person> personList);
-
 }
