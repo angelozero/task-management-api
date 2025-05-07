@@ -4,7 +4,6 @@ import com.angelozero.task.management.adapter.controller.TaskController;
 import com.angelozero.task.management.adapter.controller.rest.request.TaskRequest;
 import com.angelozero.task.management.adapter.controller.rest.response.PagedResponse;
 import com.angelozero.task.management.adapter.controller.rest.response.TaskResponse;
-import com.angelozero.task.management.entity.integration.config.BaseIntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
@@ -22,11 +21,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-public class TaskControllerBaseIntegrationTest extends BaseIntegrationTest {
+public class TaskIntegrationTest extends com.angelozero.task.management.entity.integration.config.TaskIntegrationTestConfig {
 
     private static final String GET_TASK_BY_ID_URL = "/task/{id}";
     private static final String GET_TASK_PAGED_URL = "/task";
     private static final String PUT_TASK_UPDATE_BY_ID_URL = "/task/{id}";
+
     @Autowired
     private TaskController taskController;
 

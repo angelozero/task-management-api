@@ -194,19 +194,19 @@ public class PersonByMongoDataProviderTest {
                 List.of("1"));
     }
 
-    private List<TaskEntity> getTaskEntityListMock() {
-        return List.of(new TaskEntity("1", "description", true));
-    }
-
-    private Task getTaskMock() {
-        return new Task("1", "description", true);
-    }
-
     private Person getPersonMock() {
         return new Person("1",
                 "name",
                 "email",
                 "profile-info",
                 List.of(getTaskMock()));
+    }
+
+    private List<TaskEntity> getTaskEntityListMock() {
+        return List.of(new TaskEntity("1", "description", true));
+    }
+
+    private Task getTaskMock() {
+        return new Task("1", "description", true);
     }
 }
