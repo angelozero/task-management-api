@@ -80,6 +80,7 @@
     }
     ```
   - ![graphql.png](images/graphql.png)
+  - [Trying to use MockMvc to test a GraphQL API](https://github.com/spring-projects/spring-graphql/issues/779)
 
 
 - Next steps
