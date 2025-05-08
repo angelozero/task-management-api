@@ -1,9 +1,11 @@
 package com.angelozero.task.management.entity.integration;
 
-import com.angelozero.task.management.adapter.controller.GRPCPersonController;
+import com.angelozero.task.management.adapter.controller.datatransfer.PersonOutput;
 import com.angelozero.task.management.entity.Person;
 import com.angelozero.task.management.entity.Task;
 import com.angelozero.task.management.entity.integration.config.PersonIntegrationTestConfig;
+import com.angelozero.task.management.entity.integration.response.GraphQLResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -15,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PersonIntegrationTest extends PersonIntegrationTestConfig {
 
     @Autowired
-    private GRPCPersonController grpcPersonController;
+    private ObjectMapper objectMapper;
 
     @Autowired
     private MockMvc mockMvc;
@@ -36,14 +39,42 @@ public class PersonIntegrationTest extends PersonIntegrationTestConfig {
 
     private static final String FIND_PERSON_BY_EMAIL_QUERY = """
             {
-              "query": "query personByEmail($arg1: String!) { personByEmail(email: $arg1) { profileInfo taskList { id description completed } } }",
+              "query": "query personByEmail($arg1: String!) { personByEmail(email: $arg1) { id name email profileInfo taskList { id description completed } } }",
               "operationName": "personByEmail",
               "variables": { "arg1": "%s" }
             }
             """;
 
+    private static final String FIND_PERSON_BY_ID_QUERY = """
+            {
+              "query": "query personById($arg1: String!) { personById(id: $arg1) { id name email profileInfo taskList { id description completed } } }",
+              "operationName": "personById",
+              "variables": { "arg1": "%s" }
+            }
+            """;
+
+    private static final String SAVE_PERSON_QUERY = """
+            {
+              "query": "mutation savePerson($input: PersonInput!) { savePerson(personInput: $input) { name email profileInfo taskList { id description completed } } }",
+              "operationName": "savePerson",
+              "variables": {
+                "input": {
+                  "name": "name-1",
+                  "email": "email-1",
+                  "profileInfo": "profile-info-1",
+                  "taskList": [
+                    {
+                      "description": "description-1",
+                      "completed": true
+                    }
+                  ]
+                }
+              }
+            }
+            """;
+
     @Test
-    @DisplayName("Integration Test - Should find a person by id")
+    @DisplayName("Integration Test - Should find a person by email")
     public void shouldFindAPersonByEmail() throws Exception {
         var taskList = List.of(new Task(null, "description-1", true));
         var person = new Person(null, "name-1", "email-1", "profile-info-1", taskList);
@@ -58,6 +89,69 @@ public class PersonIntegrationTest extends PersonIntegrationTestConfig {
                 .getResponse()
                 .getContentAsString();
 
-        assertNotNull(response);
+        var graphQLResponse = objectMapper.readValue(response, GraphQLResponse.class);
+
+        var personOutput = graphQLResponse.getData().getPersonByEmail();
+
+        assertNotNull(personOutput);
+        assertEquals(savedPerson.email(), personOutput.email());
+        assertEquals(savedPerson.name(), personOutput.name());
+        assertEquals("profile-info-1", personOutput.profileInfo());
+        assertEquals(1, personOutput.taskList().size());
+        assertEquals("description-1", personOutput.taskList().getFirst().description());
+    }
+
+    @Test
+    @DisplayName("Integration Test - Should find a person by id")
+    public void shouldFindAPersonById() throws Exception {
+        var taskList = List.of(new Task(null, "description-1", true));
+        var person = new Person(null, "name-1", "email-1", "profile-info-1", taskList);
+
+        var savedPerson = savePerson(person);
+
+        var response = mockMvc.perform(post("/graphql")
+                        .content(String.format(FIND_PERSON_BY_ID_QUERY, savedPerson.id()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        var graphQLResponse = objectMapper.readValue(response, GraphQLResponse.class);
+
+        var personOutput = graphQLResponse.getData().getPersonById();
+
+        assertNotNull(personOutput);
+        assertEquals(savedPerson.email(), personOutput.email());
+        assertEquals(savedPerson.name(), personOutput.name());
+        assertEquals("profile-info-1", personOutput.profileInfo());
+        assertEquals(1, personOutput.taskList().size());
+        assertEquals("description-1", personOutput.taskList().getFirst().description());
+
+    }
+
+    @Test
+    @DisplayName("Integration Test - Should save a person")
+    public void shouldSavePerson() throws Exception {
+        deletePersonData();
+        var response = mockMvc.perform(post("/graphql")
+                        .content(SAVE_PERSON_QUERY)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        var graphQLResponse = objectMapper.readValue(response, GraphQLResponse.class);
+
+        var personOutput = graphQLResponse.getData().getSavePerson();
+
+        assertNotNull(personOutput);
+        assertEquals("email-1", personOutput.email());
+        assertEquals("name-1", personOutput.name());
+        assertEquals("profile-info-1", personOutput.profileInfo());
+        assertEquals(1, personOutput.taskList().size());
+        assertEquals("description-1", personOutput.taskList().getFirst().description());
+        assertEquals(true, personOutput.taskList().getFirst().completed());
     }
 }
