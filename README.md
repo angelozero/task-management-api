@@ -81,11 +81,10 @@
     ```
   - ![graphql.png](images/graphql.png)
   - [Trying to use MockMvc to test a GraphQL API](https://github.com/spring-projects/spring-graphql/issues/779)
-
+- 11 - Integrations tests (REST / GRAPHQL)
 
 - Next steps
-  - Sealed and non sealed class 
   - Cash to the service for PokeApi using Redis (Docker)
-  - Integration tests
+  - Sealed and non sealed class 
   - RabbitMQ 
   - JWT Authentication
