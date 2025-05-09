@@ -2,10 +2,8 @@ version: '3.8'
 
 services:
   mongo:
-    # to run on a MacOs Sonoma 14.2.1 Apple M1 add "platform: linux/amd64"
-    # platform: linux/amd64
-    # to run on Ubuntu 24.04.2 LTS use the command docker compose up -d
-    image: mongo:4.4.6
+    platform: linux/arm64/v8
+    image: mongo:4.4
     container_name: mongo_container_db
     ports:
       - "27017:27017"
@@ -16,7 +14,16 @@ services:
 #      MONGO_INITDB_ROOT_PASSWORD: terra
 #      MONGO_INITDB_DATABASE: task-management-db
 
+  redis:
+    platform: linux/arm64/v8
+    image: redis:7.0
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+
 volumes:
   mongo_data:
 
-# Para iniciar: docker-compose up -d
+# to run a container on a MacOs Sonoma 14.2.1 Apple M1 add "platform: linux/arm64/v8"
+# to run docker compose on MacOs Sonoma 14.2.1 Apple M1 use the command docker-compose up -d
+# to run docker compose on Ubuntu 24.04.2 LTS use the command docker compose up -d

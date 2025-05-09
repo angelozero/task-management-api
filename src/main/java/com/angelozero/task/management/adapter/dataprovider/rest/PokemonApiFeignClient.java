@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface PokemonApiFeignClient {
 
     @GetMapping("${pokemon.api.path}")
-    PokemonResponse getPokemonByName(@PathVariable("name") String name);
+    PokemonResponse getPokemonByName(@PathVariable("value") String name);
 
     @GetMapping("${pokemon.api.path}")
-    PokemonResponse getPokemonByNumber(@PathVariable("id") Integer id);
+    PokemonResponse getPokemonByNumber(@PathVariable("value") Integer id);
 }
