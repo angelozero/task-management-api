@@ -1,5 +1,6 @@
 # Task Management Api
 
+## Done
 - 01 - Docker
 - 02 - CRUD
 - 03 - Pageable
@@ -84,7 +85,10 @@
 - 11 - Integrations tests (REST / GRAPHQL)
 - 12 - Cash to the service for PokeApi using Redis (Docker)
 
-- Next steps
-  - Sealed and non sealed class 
-  - RabbitMQ 
-  - JWT Authentication
+## Doing
+- Sealed and non sealed class 
+
+## To do
+- RabbitMQ 
+- JWT Authentication with Keycloak
+- Dual datasource
