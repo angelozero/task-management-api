@@ -91,4 +91,8 @@
 ## To do
 - RabbitMQ 
 - JWT Authentication with Keycloak
+  - Keycloak
+    - issue with object list in token
+    - override auth token
+    - custom config in a sub flow
 - Dual datasource

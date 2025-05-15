@@ -1,6 +1,5 @@
 package com.angelozero.task.management.entity.integration;
 
-import com.angelozero.task.management.adapter.controller.datatransfer.PersonOutput;
 import com.angelozero.task.management.entity.Person;
 import com.angelozero.task.management.entity.Task;
 import com.angelozero.task.management.entity.integration.config.PersonIntegrationTestConfig;
