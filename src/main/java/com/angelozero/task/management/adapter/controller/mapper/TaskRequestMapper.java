@@ -17,6 +17,8 @@ public interface TaskRequestMapper {
     @Mapping(target = "status", expression = "java(mapStatusCodeToStatusTask(taskRequest.statusCode()))")
     Task toTask(TaskRequest taskRequest);
 
+    @Mapping(target = "statusDescription", source = "status.name")
+    @Mapping(target = "statusCode", source = "status.code")
     TaskResponse toTaskResponse(Task task);
 
     List<TaskResponse> toTaskResponseList(List<Task> taskList);
