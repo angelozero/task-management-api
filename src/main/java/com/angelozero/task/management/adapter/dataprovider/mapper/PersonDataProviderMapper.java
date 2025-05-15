@@ -25,7 +25,7 @@ public interface PersonDataProviderMapper {
 
     default List<Task> mapTaskEntityListToTaskList(List<TaskEntity> taskEntityList) {
         return taskEntityList.stream()
-                .map(taskEntity -> new Task(taskEntity.id(), taskEntity.description(), taskEntity.completed()))
+                .map(taskEntity -> new Task(taskEntity.id(), taskEntity.description(), taskEntity.completed(), null))
                 .collect(Collectors.toList());
     }
 }

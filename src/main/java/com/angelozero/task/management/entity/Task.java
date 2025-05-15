@@ -1,5 +1,6 @@
 package com.angelozero.task.management.entity;
 
+import com.angelozero.task.management.entity.status.StatusTask;
 import com.angelozero.task.management.usecase.exception.TaskException;
 import org.apache.commons.lang3.StringUtils;
 
@@ -8,7 +9,8 @@ import java.util.Arrays;
 
 public record Task(String id,
                    String description,
-                   Boolean completed) {
+                   Boolean completed,
+                   StatusTask status) {
 
     public Task {
         if (StringUtils.isBlank(description)) {

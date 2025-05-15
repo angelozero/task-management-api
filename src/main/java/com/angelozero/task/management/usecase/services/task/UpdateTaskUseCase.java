@@ -49,6 +49,6 @@ public class UpdateTaskUseCase {
         var description = isSameTaskDescription ? taskFounded.description() : task.description();
         var completed = task.completed() == null ? taskFounded.completed() : task.completed();
 
-        return new Task(id, description, completed);
+        return new Task(id, description, completed, null);
     }
 }

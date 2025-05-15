@@ -3,6 +3,8 @@ package com.angelozero.task.management.adapter.controller.mapper;
 import com.angelozero.task.management.adapter.controller.rest.request.TaskRequest;
 import com.angelozero.task.management.adapter.controller.rest.response.TaskResponse;
 import com.angelozero.task.management.entity.Task;
+import com.angelozero.task.management.entity.status.*;
+import com.angelozero.task.management.usecase.exception.StatusTypeException;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -12,10 +14,21 @@ import java.util.List;
 public interface TaskRequestMapper {
 
     @Mapping(target = "id", expression = "java(null)")
+    @Mapping(target = "status", expression = "java(mapStatusCodeToStatusTask(taskRequest.statusCode()))")
     Task toTask(TaskRequest taskRequest);
 
     TaskResponse toTaskResponse(Task task);
 
     List<TaskResponse> toTaskResponseList(List<Task> taskList);
 
+    default StatusTask mapStatusCodeToStatusTask(int statusCode) {
+        return switch (statusCode) {
+            case 0 -> new CustomStatusTask();
+            case 1 -> new Pending();
+            case 2 -> new InProgress();
+            case 3 -> new Completed();
+            case 4 -> new Blocked();
+            default -> throw new StatusTypeException("Invalid status code: " + statusCode);
+        };
+    }
 }
