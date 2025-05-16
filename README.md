@@ -13,21 +13,21 @@
 - 10 - gRPC - GRAPHQL (https://www.youtube.com/watch?v=SPu77SaK-Hk)
   - test in http://localhost:8080/graphiql?path=/graphql
   - Mutation
-    ```graphql
-    mutation {
-      savePerson(personInput: {
-        name: "angelo",
-        email: "angelo@zero.com",
-        profileInfo: "this is a test",
-        taskList: [
-          { id: null, description: "Task 1", completed: false },
-          { id: null, description: "Task 2", completed: true },
-          { id: null, description: "Task 3", completed: false }
-        ]}) {
-        id
-        email
+    ```javascript
+      mutation {
+        savePerson(personInput: {
+          name: "angelo",
+          email: "angelo@zero.com",
+          profileInfo: "this is a test",
+          taskList: [
+            { id: null, description: "Task 1", completed: false, statusCode: 1 },
+            { id: null, description: "Task 2", completed: true, statusCode: 2 },
+            { id: null, description: "Task 3", completed: false, statusCode: 3 }
+          ]}) {
+          id
+          email
+        }
       }
-    }
     ```
     - response 
     ```json
@@ -41,7 +41,7 @@
     }
     ```
   - Query
-    ```graphql
+    ```javascript
     query {
       personByEmail(email: "angelo@zero.com"){
         profileInfo
@@ -49,6 +49,8 @@
           id
           description
           completed
+          statusDescription
+          statusCode
         }
       }
     }
@@ -61,19 +63,25 @@
           "profileInfo": "this is a test",
           "taskList": [
             {
-              "id": "680ee3f6cb7f6367f7defe8c",
+              "id": "682688edfeef93394b5a7921",
               "description": "Task 1",
-              "completed": false
+              "completed": false,
+              "statusDescription": "Pending",
+              "statusCode": 1
             },
             {
-              "id": "680ee3f6cb7f6367f7defe8d",
+              "id": "682688edfeef93394b5a7922",
               "description": "Task 2",
-              "completed": true
+              "completed": true,
+              "statusDescription": "In progress",
+              "statusCode": 2
             },
             {
-              "id": "680ee3f6cb7f6367f7defe8e",
+              "id": "682688edfeef93394b5a7923",
               "description": "Task 3",
-              "completed": false
+              "completed": false,
+              "statusDescription": "Completed",
+              "statusCode": 3
             }
           ]
         }
@@ -87,6 +95,7 @@
 
 ## Doing
 - Sealed and non sealed class 
+  - status
 
 ## To do
 - RabbitMQ 
@@ -96,3 +105,5 @@
     - override auth token
     - custom config in a sub flow
 - Dual datasource
+- desing pattenrs 
+  - chain of responsability

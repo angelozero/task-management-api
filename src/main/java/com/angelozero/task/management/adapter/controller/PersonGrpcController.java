@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 @AllArgsConstructor
-public class GRPCPersonController {
+public class PersonGrpcController {
 
     private final PersonDataTransferMapper personDataTransferMapper;
     private final SavePersonUseCase savePersonUseCase;
