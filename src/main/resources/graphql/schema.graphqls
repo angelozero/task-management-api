@@ -17,7 +17,9 @@ input PersonInput {
 input TaskInput {
     id: String,
     description: String,
-    completed: Boolean
+    completed: Boolean,
+    statusCode: Int
+
 }
 
 type PersonOutput {
@@ -31,5 +33,7 @@ type PersonOutput {
 type TaskOutput {
     id: String,
     description: String,
-    completed: Boolean
+    completed: Boolean,
+    statusDescription: String,
+    statusCode: Int
 }

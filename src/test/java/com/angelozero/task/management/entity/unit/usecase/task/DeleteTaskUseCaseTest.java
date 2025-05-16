@@ -1,6 +1,7 @@
 package com.angelozero.task.management.entity.unit.usecase.task;
 
 import com.angelozero.task.management.entity.Task;
+import com.angelozero.task.management.entity.status.Completed;
 import com.angelozero.task.management.usecase.services.task.DeleteTaskUseCase;
 import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;
@@ -28,7 +29,7 @@ public class DeleteTaskUseCaseTest {
     @Test
     @DisplayName("Should delete a task with success")
     public void shouldDeleteTaskWithSuccess() {
-        var taskMock = new Task("", "description", true);
+        var taskMock = new Task("", "description", true, new Completed());
 
         when(taskGateway.findById(anyString())).thenReturn(taskMock);
         doNothing().when(taskGateway).delete(any(Task.class));

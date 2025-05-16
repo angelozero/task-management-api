@@ -2,6 +2,7 @@ package com.angelozero.task.management.entity.integration.config;
 
 import com.angelozero.task.management.adapter.dataprovider.jpa.entity.TaskEntity;
 import com.angelozero.task.management.adapter.dataprovider.jpa.repository.TaskRepository;
+import com.angelozero.task.management.entity.status.StatusTask;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.ClassRule;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -54,8 +55,8 @@ public class TaskBaseIntegrationTestConfig {
         return repository.findById(id).orElse(null);
     }
 
-    public TaskEntity saveTask(String description, Boolean isCompleted) {
-        return repository.save(new TaskEntity(null, description, isCompleted));
+    public TaskEntity saveTask(String description, Boolean isCompleted, StatusTask status) {
+        return repository.save(new TaskEntity(null, description, isCompleted, status.getName(), status.getCode()));
     }
 
     public void deleteTaskData() {

@@ -5,6 +5,9 @@ import com.angelozero.task.management.adapter.controller.rest.request.TaskReques
 import com.angelozero.task.management.adapter.controller.rest.response.PagedResponse;
 import com.angelozero.task.management.adapter.controller.rest.response.TaskResponse;
 import com.angelozero.task.management.entity.integration.config.TaskBaseIntegrationTestConfig;
+import com.angelozero.task.management.entity.status.Blocked;
+import com.angelozero.task.management.entity.status.Completed;
+import com.angelozero.task.management.entity.status.Pending;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
@@ -49,7 +52,7 @@ public class TaskIntegrationTest extends TaskBaseIntegrationTestConfig {
     @Test
     @DisplayName("Integration Test - Should find a task by id")
     public void shouldFindATaskById() throws Exception {
-        var taskEntitySaved = saveTask("task-test", true);
+        var taskEntitySaved = saveTask("task-test", true, new Completed());
 
         var jsonResponse = this.mockMvc.perform(MockMvcRequestBuilders
                         .get(GET_TASK_BY_ID_URL, taskEntitySaved.id())
@@ -68,9 +71,9 @@ public class TaskIntegrationTest extends TaskBaseIntegrationTestConfig {
     @Test
     @DisplayName("Integration Test - Should find paged tasks without parameters")
     public void shouldFindPagedTasksWithoutParams() throws Exception {
-        saveTask("task-test-1", true);
-        saveTask("task-test-2", true);
-        saveTask("task-test-3", true);
+        saveTask("task-test-1", true, new Completed());
+        saveTask("task-test-2", true, new Blocked());
+        saveTask("task-test-3", true, new Pending());
 
         var jsonResponse = this.mockMvc.perform(MockMvcRequestBuilders
                         .get(GET_TASK_PAGED_URL)
@@ -92,8 +95,17 @@ public class TaskIntegrationTest extends TaskBaseIntegrationTestConfig {
         assertEquals(10, taskPagedResponse.size());
         assertNull(taskPagedResponse.content());
         assertEquals("task-test-1", taskPagedResponse.contents().getFirst().description());
+        assertEquals("Completed", taskPagedResponse.contents().getFirst().statusDescription());
+        assertEquals(3, taskPagedResponse.contents().getFirst().statusCode());
+
         assertEquals("task-test-2", taskPagedResponse.contents().get(1).description());
+        assertEquals("Blocked", taskPagedResponse.contents().get(1).statusDescription());
+        assertEquals(4, taskPagedResponse.contents().get(1).statusCode());
+
         assertEquals("task-test-3", taskPagedResponse.contents().get(2).description());
+        assertEquals("Pending", taskPagedResponse.contents().get(2).statusDescription());
+        assertEquals(1, taskPagedResponse.contents().get(2).statusCode());
+
         assertFalse(taskPagedResponse.hasNext());
         assertFalse(taskPagedResponse.hasPrevious());
     }
@@ -101,9 +113,9 @@ public class TaskIntegrationTest extends TaskBaseIntegrationTestConfig {
     @Test
     @DisplayName("Integration Test - Should find paged tasks with parameters")
     public void shouldFindPagedTasksWithParams() throws Exception {
-        saveTask("task-test-1", true);
-        saveTask("task-test-2", true);
-        saveTask("task-test-3", false);
+        saveTask("task-test-1", true, new Completed());
+        saveTask("task-test-2", true, new Completed());
+        saveTask("task-test-3", false, new Completed());
 
         var firstJsonResponse = this.mockMvc.perform(MockMvcRequestBuilders
                         .get(GET_TASK_PAGED_URL)
@@ -145,6 +157,9 @@ public class TaskIntegrationTest extends TaskBaseIntegrationTestConfig {
         assertEquals(1, firstTaskPagedResponse.size());
         assertNull(firstTaskPagedResponse.content());
         assertEquals("task-test-1", firstTaskPagedResponse.contents().getFirst().description());
+        assertEquals("Completed", firstTaskPagedResponse.contents().getFirst().statusDescription());
+        assertEquals(3, firstTaskPagedResponse.contents().getFirst().statusCode());
+
         assertTrue(firstTaskPagedResponse.hasNext());
         assertFalse(firstTaskPagedResponse.hasPrevious());
 
@@ -158,6 +173,8 @@ public class TaskIntegrationTest extends TaskBaseIntegrationTestConfig {
         assertEquals(1, secondTaskPagedResponse.size());
         assertNull(secondTaskPagedResponse.content());
         assertEquals("task-test-2", secondTaskPagedResponse.contents().getFirst().description());
+        assertEquals("Completed", secondTaskPagedResponse.contents().getFirst().statusDescription());
+        assertEquals(3, secondTaskPagedResponse.contents().getFirst().statusCode());
         assertFalse(secondTaskPagedResponse.hasNext());
         assertTrue(secondTaskPagedResponse.hasPrevious());
     }
@@ -165,8 +182,8 @@ public class TaskIntegrationTest extends TaskBaseIntegrationTestConfig {
     @Test
     @DisplayName("Integration Test - Should update a task by id")
     public void shouldUpdateATaskById() throws Exception {
-        var taskEntitySaved = saveTask("task-test", true);
-        var taskRequest = new ObjectMapper().writeValueAsString(new TaskRequest("task-test-updated", false));
+        var taskEntitySaved = saveTask("task-test", true, new Completed());
+        var taskRequest = new ObjectMapper().writeValueAsString(new TaskRequest("task-test-updated", false, 4));
 
         var jsonResponse = this.mockMvc.perform(MockMvcRequestBuilders
                         .put(PUT_TASK_UPDATE_BY_ID_URL, taskEntitySaved.id())
@@ -181,13 +198,15 @@ public class TaskIntegrationTest extends TaskBaseIntegrationTestConfig {
 
         assertNotNull(taskResponse);
         assertEquals("task-test-updated", taskResponse.description());
+        assertEquals("Blocked", taskResponse.statusDescription());
+        assertEquals(4, taskResponse.statusCode());
         assertFalse(taskResponse.completed());
     }
 
     @Test
     @DisplayName("Integration Test - Should delete a task by id")
     public void shouldDeleteATaskById() throws Exception {
-        var taskEntitySaved = saveTask("task-test", true);
+        var taskEntitySaved = saveTask("task-test", true, new Completed());
 
         this.mockMvc.perform(MockMvcRequestBuilders
                         .delete(PUT_TASK_UPDATE_BY_ID_URL, taskEntitySaved.id())

@@ -1,6 +1,7 @@
 package com.angelozero.task.management.entity.unit.usecase.task;
 
 import com.angelozero.task.management.entity.Task;
+import com.angelozero.task.management.entity.status.Completed;
 import com.angelozero.task.management.usecase.services.task.FindTaskByIdUseCase;
 import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;
@@ -29,7 +30,7 @@ public class FindTaskByIdUseCaseTest {
     @Test
     @DisplayName("Should find a task by id with success")
     public void shouldFindTaskByIdWithSuccess() {
-        var taskMock = new Task("", "description", true);
+        var taskMock = new Task("", "description", true, new Completed());
 
         when(taskGateway.findById(anyString())).thenReturn(taskMock);
 

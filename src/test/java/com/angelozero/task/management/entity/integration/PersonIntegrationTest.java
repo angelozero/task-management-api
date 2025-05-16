@@ -4,6 +4,9 @@ import com.angelozero.task.management.entity.Person;
 import com.angelozero.task.management.entity.Task;
 import com.angelozero.task.management.entity.integration.config.PersonIntegrationTestConfig;
 import com.angelozero.task.management.entity.integration.response.GraphQLResponse;
+import com.angelozero.task.management.entity.status.Blocked;
+import com.angelozero.task.management.entity.status.Pending;
+import com.angelozero.task.management.entity.status.StatusType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Test;
@@ -38,7 +41,7 @@ public class PersonIntegrationTest extends PersonIntegrationTestConfig {
 
     private static final String FIND_PERSON_BY_EMAIL_QUERY = """
             {
-              "query": "query personByEmail($arg1: String!) { personByEmail(email: $arg1) { id name email profileInfo taskList { id description completed } } }",
+              "query": "query personByEmail($arg1: String!) { personByEmail(email: $arg1) { id name email profileInfo taskList { id description completed statusDescription statusCode } } }",
               "operationName": "personByEmail",
               "variables": { "arg1": "%s" }
             }
@@ -46,7 +49,7 @@ public class PersonIntegrationTest extends PersonIntegrationTestConfig {
 
     private static final String FIND_PERSON_BY_ID_QUERY = """
             {
-              "query": "query personById($arg1: String!) { personById(id: $arg1) { id name email profileInfo taskList { id description completed } } }",
+              "query": "query personById($arg1: String!) { personById(id: $arg1) { id name email profileInfo taskList { id description completed statusDescription statusCode } } }",
               "operationName": "personById",
               "variables": { "arg1": "%s" }
             }
@@ -54,7 +57,7 @@ public class PersonIntegrationTest extends PersonIntegrationTestConfig {
 
     private static final String SAVE_PERSON_QUERY = """
             {
-              "query": "mutation savePerson($input: PersonInput!) { savePerson(personInput: $input) { name email profileInfo taskList { id description completed } } }",
+              "query": "mutation savePerson($input: PersonInput!) { savePerson(personInput: $input) { name email profileInfo taskList { id description completed statusDescription statusCode } } }",
               "operationName": "savePerson",
               "variables": {
                 "input": {
@@ -64,7 +67,8 @@ public class PersonIntegrationTest extends PersonIntegrationTestConfig {
                   "taskList": [
                     {
                       "description": "description-1",
-                      "completed": true
+                      "completed": true,
+                      "statusCode": 2
                     }
                   ]
                 }
@@ -75,7 +79,7 @@ public class PersonIntegrationTest extends PersonIntegrationTestConfig {
     @Test
     @DisplayName("Integration Test - Should find a person by email")
     public void shouldFindAPersonByEmail() throws Exception {
-        var taskList = List.of(new Task(null, "description-1", true));
+        var taskList = List.of(new Task(null, "description-1", true, new Blocked()));
         var person = new Person(null, "name-1", "email-1", "profile-info-1", taskList);
 
         var savedPerson = savePerson(person);
@@ -98,12 +102,14 @@ public class PersonIntegrationTest extends PersonIntegrationTestConfig {
         assertEquals("profile-info-1", personOutput.profileInfo());
         assertEquals(1, personOutput.taskList().size());
         assertEquals("description-1", personOutput.taskList().getFirst().description());
+        assertEquals("Blocked", personOutput.taskList().getFirst().statusDescription());
+        assertEquals(4, personOutput.taskList().getFirst().statusCode());
     }
 
     @Test
     @DisplayName("Integration Test - Should find a person by id")
     public void shouldFindAPersonById() throws Exception {
-        var taskList = List.of(new Task(null, "description-1", true));
+        var taskList = List.of(new Task(null, "description-1", true, new Pending()));
         var person = new Person(null, "name-1", "email-1", "profile-info-1", taskList);
 
         var savedPerson = savePerson(person);
@@ -126,6 +132,9 @@ public class PersonIntegrationTest extends PersonIntegrationTestConfig {
         assertEquals("profile-info-1", personOutput.profileInfo());
         assertEquals(1, personOutput.taskList().size());
         assertEquals("description-1", personOutput.taskList().getFirst().description());
+        assertEquals("Pending", personOutput.taskList().getFirst().statusDescription());
+        assertEquals(1, personOutput.taskList().getFirst().statusCode());
+
 
     }
 
@@ -152,5 +161,7 @@ public class PersonIntegrationTest extends PersonIntegrationTestConfig {
         assertEquals(1, personOutput.taskList().size());
         assertEquals("description-1", personOutput.taskList().getFirst().description());
         assertEquals(true, personOutput.taskList().getFirst().completed());
+        assertEquals("In progress", personOutput.taskList().getFirst().statusDescription());
+        assertEquals(2, personOutput.taskList().getFirst().statusCode());
     }
 }

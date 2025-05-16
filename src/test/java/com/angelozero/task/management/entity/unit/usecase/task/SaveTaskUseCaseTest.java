@@ -1,6 +1,7 @@
 package com.angelozero.task.management.entity.unit.usecase.task;
 
 import com.angelozero.task.management.entity.Task;
+import com.angelozero.task.management.entity.status.Completed;
 import com.angelozero.task.management.usecase.services.task.SaveTaskUseCase;
 import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;
@@ -28,7 +29,7 @@ public class SaveTaskUseCaseTest {
     @Test
     @DisplayName("Should save a Task with success")
     public void shouldSaveTaskWithSuccess() {
-        var taskMock = new Task("", "description", false);
+        var taskMock = new Task("", "description", false, new Completed());
 
         doNothing().when(taskGateway).save(any(Task.class));
 

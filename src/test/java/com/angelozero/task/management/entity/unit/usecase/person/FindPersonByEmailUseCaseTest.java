@@ -2,6 +2,7 @@ package com.angelozero.task.management.entity.unit.usecase.person;
 
 import com.angelozero.task.management.entity.Person;
 import com.angelozero.task.management.entity.Task;
+import com.angelozero.task.management.entity.status.Completed;
 import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.gateway.PersonGateway;
 import com.angelozero.task.management.usecase.services.person.FindPersonByEmailUseCase;
@@ -30,7 +31,7 @@ public class FindPersonByEmailUseCaseTest {
     @Test
     @DisplayName("Should find a person by email with success")
     public void shouldFindPersonByEmailWithSuccess() {
-        var taskListMock = List.of(new Task("id", "description", true));
+        var taskListMock = List.of(new Task("id", "description", true, new Completed()));
         var personMock = new Person("", "name", "email", "profileInfo", taskListMock);
 
         when(personGateway.findByEmail(anyString())).thenReturn(personMock);

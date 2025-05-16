@@ -63,7 +63,7 @@ public class PersonIntegrationTestConfig {
     public PersonEntity savePerson(Person person) {
         var tasksEntityList = taskRepository.saveAll(person.taskList()
                 .stream()
-                .map(task -> new TaskEntity(null, task.description(), task.completed()))
+                .map(task -> new TaskEntity(null, task.description(), task.completed(), task.status().getName(), task.status().getCode()))
                 .toList());
         var tasks = tasksEntityList.stream().map(TaskEntity::id).toList();
         return personRepository.save(new PersonEntity(null, person.name(), person.email(), person.profileInfo(), tasks));

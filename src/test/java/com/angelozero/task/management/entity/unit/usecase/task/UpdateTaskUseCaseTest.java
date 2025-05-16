@@ -1,6 +1,7 @@
 package com.angelozero.task.management.entity.unit.usecase.task;
 
 import com.angelozero.task.management.entity.Task;
+import com.angelozero.task.management.entity.status.Completed;
 import com.angelozero.task.management.usecase.services.task.UpdateTaskUseCase;
 import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;
@@ -28,7 +29,7 @@ public class UpdateTaskUseCaseTest {
     @Test
     @DisplayName("Should update a Task with success - same description - same isCompleted")
     public void shouldUpdateTaskWithSuccessSameDescriptionSameIsCompleted() {
-        var taskMock = new Task("task-id", "description", true);
+        var taskMock = new Task("task-id", "description", true, new Completed());
 
         when(taskGateway.findById(anyString())).thenReturn(taskMock);
         when(taskGateway.update(any(Task.class))).thenReturn(taskMock);
@@ -41,8 +42,8 @@ public class UpdateTaskUseCaseTest {
     @Test
     @DisplayName("Should update a Task with success - different description - different isCompleted")
     public void shouldUpdateTaskWithSuccessDifferentDescriptionDifferentIsCompleted() {
-        var savedTaskMock = new Task("task-id", "description", true);
-        var taskMock = new Task("task-id", "description-test", false);
+        var savedTaskMock = new Task("task-id", "description", true, new Completed());
+        var taskMock = new Task("task-id", "description-test", false, new Completed());
 
         when(taskGateway.findById(anyString())).thenReturn(savedTaskMock);
         when(taskGateway.update(any(Task.class))).thenReturn(taskMock);

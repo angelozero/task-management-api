@@ -1,6 +1,7 @@
 package com.angelozero.task.management.entity.unit.usecase.task;
 
 import com.angelozero.task.management.entity.Task;
+import com.angelozero.task.management.entity.status.Completed;
 import com.angelozero.task.management.usecase.services.task.FindTasksUseCase;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +32,7 @@ public class FindTasksUseCaseTest {
     @Test
     @DisplayName("Should find paged tasks with success - no sortedField")
     public void shouldFindPagedTasksWithSuccessNoSortedField() {
-        var taskMock = new Task("", "description", false);
+        var taskMock = new Task("", "description", false, new Completed());
         var taskListMock = List.of(taskMock);
         var pageRequestMock = PageRequest.of(0, 1);
         var taskPagedMock = new PageImpl<>(taskListMock, pageRequestMock, taskListMock.size());
@@ -47,7 +48,7 @@ public class FindTasksUseCaseTest {
     @Test
     @DisplayName("Should find paged tasks with success - with sortedField")
     public void shouldFindPagedTasksWithSuccessWithSortedField() {
-        var taskMock = new Task("", "description", true);
+        var taskMock = new Task("", "description", true, new Completed());
         var taskListMock = List.of(taskMock);
         var pageRequestMock = PageRequest.of(0, 1);
         var taskPagedMock = new PageImpl<>(taskListMock, pageRequestMock, taskListMock.size());

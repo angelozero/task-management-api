@@ -9,6 +9,7 @@ import com.angelozero.task.management.adapter.dataprovider.mapper.PersonDataProv
 import com.angelozero.task.management.adapter.dataprovider.mapper.TaskDataProviderMapper;
 import com.angelozero.task.management.entity.Person;
 import com.angelozero.task.management.entity.Task;
+import com.angelozero.task.management.entity.status.Completed;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -203,10 +204,10 @@ public class PersonByMongoDataProviderTest {
     }
 
     private List<TaskEntity> getTaskEntityListMock() {
-        return List.of(new TaskEntity("1", "description", true));
+        return List.of(new TaskEntity("1", "description", true, "statusTYpe", 0));
     }
 
     private Task getTaskMock() {
-        return new Task("1", "description", true);
+        return new Task("1", "description", true, new Completed());
     }
 }

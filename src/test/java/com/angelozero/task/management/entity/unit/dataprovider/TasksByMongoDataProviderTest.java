@@ -5,6 +5,7 @@ import com.angelozero.task.management.adapter.dataprovider.jpa.entity.TaskEntity
 import com.angelozero.task.management.adapter.dataprovider.jpa.repository.TaskRepository;
 import com.angelozero.task.management.adapter.dataprovider.mapper.TaskDataProviderMapper;
 import com.angelozero.task.management.entity.Task;
+import com.angelozero.task.management.entity.status.Completed;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.testcontainers.shaded.org.checkerframework.checker.units.qual.C;
 
 import java.util.List;
 import java.util.Optional;
@@ -145,18 +147,18 @@ public class TasksByMongoDataProviderTest {
     }
 
     private List<TaskEntity> getTaskEntityListMock() {
-        return List.of(new TaskEntity("1", "description", true));
+        return List.of(new TaskEntity("1", "description", true, "statusTYpe", 0));
     }
 
     private TaskEntity getTaskEntityMock() {
-        return new TaskEntity("1", "description", true);
+        return new TaskEntity("1", "description", true, "statusTYpe", 0);
     }
 
     private List<Task> getTaskListMock() {
-        return List.of(new Task("1", "description", true));
+        return List.of(new Task("1", "description", true, new Completed()));
     }
 
     private Task getTaskMock() {
-        return new Task("1", "description", true);
+        return new Task("1", "description", true, new Completed());
     }
 }
