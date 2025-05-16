@@ -92,10 +92,10 @@
   - [Trying to use MockMvc to test a GraphQL API](https://github.com/spring-projects/spring-graphql/issues/779)
 - 11 - Integrations tests (REST / GRAPHQL)
 - 12 - Cash to the service for PokeApi using Redis (Docker)
+- 13 - Sealed and non sealed class 
 
 ## Doing
-- Sealed and non sealed class 
-  - status
+- Dual datasource
 
 ## To do
 - RabbitMQ 
@@ -104,6 +104,6 @@
     - issue with object list in token
     - override auth token
     - custom config in a sub flow
-- Dual datasource
+
 - desing pattenrs 
   - chain of responsability
