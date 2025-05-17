@@ -1,9 +1,9 @@
 package com.angelozero.task.management.entity.integration.config;
 
-import com.angelozero.task.management.adapter.dataprovider.jpa.entity.PersonEntity;
-import com.angelozero.task.management.adapter.dataprovider.jpa.entity.TaskEntity;
-import com.angelozero.task.management.adapter.dataprovider.jpa.repository.PersonRepository;
-import com.angelozero.task.management.adapter.dataprovider.jpa.repository.TaskRepository;
+import com.angelozero.task.management.adapter.dataprovider.jpa.document.PersonEntity;
+import com.angelozero.task.management.adapter.dataprovider.jpa.document.TaskEntity;
+import com.angelozero.task.management.adapter.dataprovider.jpa.repository.mongo.PersonRepository;
+import com.angelozero.task.management.adapter.dataprovider.jpa.repository.mongo.TaskRepository;
 import com.angelozero.task.management.entity.Person;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.ClassRule;

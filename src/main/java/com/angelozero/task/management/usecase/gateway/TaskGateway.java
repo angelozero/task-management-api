@@ -1,6 +1,5 @@
 package com.angelozero.task.management.usecase.gateway;
 
-import com.angelozero.task.management.adapter.dataprovider.jpa.entity.TaskEntity;
 import com.angelozero.task.management.entity.Task;
 import org.springframework.data.domain.Page;
 

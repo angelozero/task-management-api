@@ -1,7 +1,7 @@
 package com.angelozero.task.management.adapter.dataprovider;
 
-import com.angelozero.task.management.adapter.dataprovider.jpa.entity.TaskEntity;
-import com.angelozero.task.management.adapter.dataprovider.jpa.repository.TaskRepository;
+import com.angelozero.task.management.adapter.dataprovider.jpa.document.TaskEntity;
+import com.angelozero.task.management.adapter.dataprovider.jpa.repository.mongo.TaskRepository;
 import com.angelozero.task.management.adapter.dataprovider.mapper.TaskDataProviderMapper;
 import com.angelozero.task.management.entity.Task;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;

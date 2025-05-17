@@ -1,7 +1,7 @@
 package com.angelozero.task.management.adapter.dataprovider.mapper;
 
-import com.angelozero.task.management.adapter.dataprovider.jpa.entity.PersonEntity;
-import com.angelozero.task.management.adapter.dataprovider.jpa.entity.TaskEntity;
+import com.angelozero.task.management.adapter.dataprovider.jpa.document.PersonEntity;
+import com.angelozero.task.management.adapter.dataprovider.jpa.document.TaskEntity;
 import com.angelozero.task.management.entity.Person;
 import com.angelozero.task.management.entity.Task;
 import com.angelozero.task.management.entity.status.*;

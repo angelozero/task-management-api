@@ -1,10 +1,10 @@
 package com.angelozero.task.management.entity.unit.dataprovider;
 
 import com.angelozero.task.management.adapter.dataprovider.PersonByMongoDataProvider;
-import com.angelozero.task.management.adapter.dataprovider.jpa.entity.PersonEntity;
-import com.angelozero.task.management.adapter.dataprovider.jpa.entity.TaskEntity;
-import com.angelozero.task.management.adapter.dataprovider.jpa.repository.PersonRepository;
-import com.angelozero.task.management.adapter.dataprovider.jpa.repository.TaskRepository;
+import com.angelozero.task.management.adapter.dataprovider.jpa.document.PersonEntity;
+import com.angelozero.task.management.adapter.dataprovider.jpa.document.TaskEntity;
+import com.angelozero.task.management.adapter.dataprovider.jpa.repository.mongo.PersonRepository;
+import com.angelozero.task.management.adapter.dataprovider.jpa.repository.mongo.TaskRepository;
 import com.angelozero.task.management.adapter.dataprovider.mapper.PersonDataProviderMapper;
 import com.angelozero.task.management.adapter.dataprovider.mapper.TaskDataProviderMapper;
 import com.angelozero.task.management.entity.Person;

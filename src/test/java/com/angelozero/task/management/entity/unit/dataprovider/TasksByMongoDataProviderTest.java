@@ -1,8 +1,8 @@
 package com.angelozero.task.management.entity.unit.dataprovider;
 
 import com.angelozero.task.management.adapter.dataprovider.TasksByMongoDataProvider;
-import com.angelozero.task.management.adapter.dataprovider.jpa.entity.TaskEntity;
-import com.angelozero.task.management.adapter.dataprovider.jpa.repository.TaskRepository;
+import com.angelozero.task.management.adapter.dataprovider.jpa.document.TaskEntity;
+import com.angelozero.task.management.adapter.dataprovider.jpa.repository.mongo.TaskRepository;
 import com.angelozero.task.management.adapter.dataprovider.mapper.TaskDataProviderMapper;
 import com.angelozero.task.management.entity.Task;
 import com.angelozero.task.management.entity.status.Completed;
@@ -14,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.testcontainers.shaded.org.checkerframework.checker.units.qual.C;
 
 import java.util.List;
 import java.util.Optional;

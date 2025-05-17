@@ -1,6 +1,6 @@
-package com.angelozero.task.management.adapter.dataprovider.jpa.repository;
+package com.angelozero.task.management.adapter.dataprovider.jpa.repository.mongo;
 
-import com.angelozero.task.management.adapter.dataprovider.jpa.entity.TaskEntity;
+import com.angelozero.task.management.adapter.dataprovider.jpa.document.TaskEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;

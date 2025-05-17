@@ -1,4 +1,4 @@
-package com.angelozero.task.management.adapter.dataprovider.jpa.entity;
+package com.angelozero.task.management.adapter.dataprovider.jpa.document;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

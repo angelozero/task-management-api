@@ -9,10 +9,10 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
-#    environment:
-#      MONGO_INITDB_ROOT_USERNAME: root
-#      MONGO_INITDB_ROOT_PASSWORD: terra
-#      MONGO_INITDB_DATABASE: task-management-db
+  #    environment:
+  #      MONGO_INITDB_ROOT_USERNAME: root
+  #      MONGO_INITDB_ROOT_PASSWORD: terra
+  #      MONGO_INITDB_DATABASE: task-management-db
 
   redis:
     platform: linux/arm64/v8
@@ -21,9 +21,36 @@ services:
     ports:
       - "6379:6379"
 
+  postgres_reader:
+    platform: linux/arm64/v8
+    image: postgres:15-alpine
+    container_name: postgres_reader_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: master
+      POSTGRES_PASSWORD: terra
+      POSTGRES_DB: datasource_read
+    volumes:
+      - postgres_reader_data:/var/lib/postgresql/data
+
+  postgres_writer:
+    platform: linux/arm64/v8
+    image: postgres:15-alpine
+    container_name: postgres_writer_db
+    ports:
+      - "5678:5432"
+    environment:
+      POSTGRES_USER: master
+      POSTGRES_PASSWORD: terra
+      POSTGRES_DB: datasource_write
+    volumes:
+      - postgres_writer_data:/var/lib/postgresql/data
 volumes:
   mongo_data:
+  postgres_reader_data:
+  postgres_writer_data:
 
-# to run a container on a MacOs Sonoma 14.2.1 Apple M1 add "platform: linux/arm64/v8"
-# to run docker compose on MacOs Sonoma 14.2.1 Apple M1 use the command docker-compose up -d
-# to run docker compose on Ubuntu 24.04.2 LTS use the command docker compose up -d
+# para executar um contentor num MacOs Sonoma 14.2.1 Apple M1 adicione "platform: linux/arm64/v8"
+# para executar o docker compose num MacOs Sonoma 14.2.1 Apple M1 use o comando docker-compose up -d
+# para executar o docker compose no Ubuntu 24.04.2 LTS use o comando docker compose up -d

@@ -5,6 +5,7 @@ import com.angelozero.task.management.adapter.controller.mapper.TaskRequestMappe
 import com.angelozero.task.management.adapter.controller.rest.request.TaskRequest;
 import com.angelozero.task.management.adapter.controller.rest.response.PagedResponse;
 import com.angelozero.task.management.adapter.controller.rest.response.TaskResponse;
+import com.angelozero.task.management.adapter.dataprovider.EventByPostgresDataProvider;
 import com.angelozero.task.management.usecase.services.task.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,9 +27,14 @@ public class TaskController {
 
     private final TaskRequestMapper taskRequestMapper;
 
+    private final EventByPostgresDataProvider eventByPostgresDataProvider;
+
 
     @GetMapping("/{id}")
     public ResponseEntity<TaskResponse> findTasks(@PathVariable String id) {
+
+        eventByPostgresDataProvider.save();
+
         var task = findTaskByIdUseCase.execute(id);
         var taskResponse = taskRequestMapper.toTaskResponse(task);
 
