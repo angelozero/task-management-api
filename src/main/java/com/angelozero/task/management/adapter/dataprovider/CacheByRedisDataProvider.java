@@ -1,13 +1,13 @@
 package com.angelozero.task.management.adapter.dataprovider;
 
-import lombok.AllArgsConstructor;
 import com.angelozero.task.management.usecase.gateway.CacheGateway;
+import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
 
-@Component
+@Service
 @AllArgsConstructor
 public class CacheByRedisDataProvider implements CacheGateway {
 

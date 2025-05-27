@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
-public class EventByPostgresDataProvider {
+public class EventEntityByPostgresDataProvider {
 
     private final EventWriterDataBaseRepository eventWriterDataBaseRepository;
     private final EventReaderDataBaseRepository eventReaderDataBaseRepository;

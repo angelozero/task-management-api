@@ -26,7 +26,7 @@ public class EventEntity {
 
     private Integer userId;
 
-    private LocalDateTime timestamp;
+    private LocalDateTime localDateTime;
 
     private boolean read;
 

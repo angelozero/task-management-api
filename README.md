@@ -18,6 +18,7 @@
 ## Doing
 - Dual datasource (DataSourceOrquestration.md)
 - RabbitMQ (RabbitMQ.md)
+- [img.png](images/rabbitmq-interface.png)
 
 ## To do
 - JWT Authentication with Keycloak
@@ -27,4 +28,4 @@
     - custom conditional in a sub flow (https://github.com/jdelker/keycloak-conditional-authenticators/blob/master/src/main/java/de/jdelker/keycloak/authentication/authenticators/conditional/ConditionalHeaderAuthenticator.java)
 
 - desing patterns 
-  - chain of responsability
+  - chain of responsability!
