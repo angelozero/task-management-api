@@ -7,10 +7,10 @@ import java.time.LocalDateTime;
 
 public record Event(Integer id,
                     String eventType,
-                    Integer entityId,
-                    Integer userId,
+                    String entityId,
+                    String userId,
                     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
                     LocalDateTime localDateTime,
-                    boolean read,
+                    Boolean read,
                     String message) {
 }

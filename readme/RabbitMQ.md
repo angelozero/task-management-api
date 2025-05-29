@@ -8,6 +8,15 @@ The consume method creates a temporary queue, binds it to the simple_events exch
 
 This example illustrates the core concepts of publishing and consuming events via a message broker in a straightforward manner.
 
+```xml
+<!-- https://mvnrepository.com/artifact/com.rabbitmq/amqp-client -->
+<dependency>
+    <groupId>com.rabbitmq</groupId>
+    <artifactId>amqp-client</artifactId>
+    <version>5.25.0</version>
+</dependency>
+```
+
 ```java
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;

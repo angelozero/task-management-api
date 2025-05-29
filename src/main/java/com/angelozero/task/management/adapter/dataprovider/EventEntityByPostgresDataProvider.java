@@ -1,27 +1,34 @@
 package com.angelozero.task.management.adapter.dataprovider;
 
-import com.angelozero.task.management.adapter.dataprovider.jpa.entity.EventEntity;
-import com.angelozero.task.management.adapter.dataprovider.jpa.repository.postgres.reader.EventReaderDataBaseRepository;
 import com.angelozero.task.management.adapter.dataprovider.jpa.repository.postgres.writer.EventWriterDataBaseRepository;
+import com.angelozero.task.management.adapter.dataprovider.mapper.EventDataProviderMapper;
+import com.angelozero.task.management.entity.Event;
+import com.angelozero.task.management.usecase.exception.DataBaseDataProviderException;
+import com.angelozero.task.management.usecase.gateway.EventGateway;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
+@Slf4j
 @Service
 @AllArgsConstructor
-public class EventEntityByPostgresDataProvider {
+public class EventEntityByPostgresDataProvider implements EventGateway {
 
     private final EventWriterDataBaseRepository eventWriterDataBaseRepository;
-    private final EventReaderDataBaseRepository eventReaderDataBaseRepository;
+    private final EventDataProviderMapper eventDataProviderMapper;
 
-    public void save() {
-        var entityWriter = new EventEntity(null, "test", 0, 0, LocalDateTime.now(), false, "test");
-        var entityReader = new EventEntity(null, "test", 0, 0, LocalDateTime.now(), false, "test");
-        var savedWriterEntity = eventWriterDataBaseRepository.saveAndFlush(entityWriter);
-        var savedReaderEntity = eventReaderDataBaseRepository.saveAndFlush(entityReader);
 
-        System.out.println(savedWriterEntity);
-        System.out.println(savedReaderEntity);
+    @Override
+    public Event save(Event event) {
+        try {
+            var eventEntity = eventDataProviderMapper.toEventEntity(event);
+            var eventSaved = eventWriterDataBaseRepository.save(eventEntity);
+
+            return eventDataProviderMapper.toEvent(eventSaved);
+
+        } catch (Exception ex) {
+            log.error("Fail to save an Event into the database - fail: {}", ex.getMessage());
+            throw new DataBaseDataProviderException("Fail to save an Event into the database - fail: " + ex.getMessage());
+        }
     }
 }

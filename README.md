@@ -16,9 +16,15 @@
 - 13 - Sealed and non sealed class 
 
 ## Doing
-- Dual datasource (DataSourceOrquestration.md)
-- RabbitMQ (RabbitMQ.md)
-- [img.png](images/rabbitmq-interface.png)
+- Dual datasource (DataSourceOrchestration.md)
+  - RabbitMQ (RabbitMQ.md)
+  - [img.png](images/rabbitmq-interface.png)
+  - Saves an event to the database
+  - Triggers an event in the queue
+  - Consumes the event from the queue
+  - Saves the event to the second database
+  - If a read was triggered, updates the saved event in the second database
+  - Consumes events from the second database for querying
 
 ## To do
 - JWT Authentication with Keycloak
@@ -27,5 +33,5 @@
     - override auth token
     - custom conditional in a sub flow (https://github.com/jdelker/keycloak-conditional-authenticators/blob/master/src/main/java/de/jdelker/keycloak/authentication/authenticators/conditional/ConditionalHeaderAuthenticator.java)
 
-- desing patterns 
-  - chain of responsability!
+- design patterns 
+  - chain of responsibility!

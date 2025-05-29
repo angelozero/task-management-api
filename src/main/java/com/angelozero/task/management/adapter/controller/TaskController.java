@@ -30,15 +30,8 @@ public class TaskController {
 
     private final TaskRequestMapper taskRequestMapper;
 
-    private final EventEntityByPostgresDataProvider eventEntityByPostgresDataProvider;
-    private final EventPublisherByRabbitMQDataProvider publisher;
-
-
     @GetMapping("/{id}")
     public ResponseEntity<TaskResponse> findTasks(@PathVariable String id) {
-
-        publisher.publish(new Event(1, "test", 0, 0, LocalDateTime.now(), false, "test"));
-
         var task = findTaskByIdUseCase.execute(id);
         var taskResponse = taskRequestMapper.toTaskResponse(task);
 

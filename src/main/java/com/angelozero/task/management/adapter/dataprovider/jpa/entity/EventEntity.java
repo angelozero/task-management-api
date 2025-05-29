@@ -22,13 +22,13 @@ public class EventEntity {
 
     private String eventType;
 
-    private Integer entityId;
+    private String entityId;
 
-    private Integer userId;
+    private String userId;
 
     private LocalDateTime localDateTime;
 
-    private boolean read;
+    private Boolean read;
 
     private String message;
 

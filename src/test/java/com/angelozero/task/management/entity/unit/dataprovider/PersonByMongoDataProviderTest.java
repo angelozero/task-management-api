@@ -10,6 +10,7 @@ import com.angelozero.task.management.adapter.dataprovider.mapper.TaskDataProvid
 import com.angelozero.task.management.entity.Person;
 import com.angelozero.task.management.entity.Task;
 import com.angelozero.task.management.entity.status.Completed;
+import com.angelozero.task.management.usecase.exception.DataBaseDataProviderException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -185,6 +186,158 @@ public class PersonByMongoDataProviderTest {
         doNothing().when(personRepository).delete(any());
 
         assertDoesNotThrow(() -> personByMongoDataProvider.delete(personMock));
+    }
+
+    @Test
+    @DisplayName("Should fail to get all tasks")
+    void shouldFailToGetAllTasks() {
+        var errorMessage = "Fail to get all person tasks - fail: test fail all tasks id in";
+
+        when(personRepository.findById(any())).thenReturn(Optional.of(getPeronEntityMock()));
+        when(taskRepository.findByIdIn(any())).thenThrow(new RuntimeException("test fail all tasks id in"));
+
+        var exception = assertThrows(DataBaseDataProviderException.class, () -> personByMongoDataProvider.findById("id"));
+
+        assertNotNull(exception);
+        assertEquals(errorMessage, exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Should fail to save a person - fail to save all tasks")
+    void shouldFailToSavePersonFailToSaveAllTasks() {
+        var personMock = getPersonMock();
+        var errorMessage = "Fail to save all person tasks - fail: test fail save all tasks";
+
+        when(taskDataProviderMapper.toTaskEntityList(any())).thenReturn(getTaskEntityListMock());
+        when(taskRepository.saveAll(any())).thenThrow(new RuntimeException("test fail save all tasks"));
+
+        var exception = assertThrows(DataBaseDataProviderException.class, () -> personByMongoDataProvider.save(personMock));
+
+        assertNotNull(exception);
+        assertEquals(errorMessage, exception.getMessage());
+
+        verify(personDataProviderMapper, never()).toPersonEntity(any(), any());
+        verify(personRepository, never()).save(any());
+    }
+
+    @Test
+    @DisplayName("Should fail to save a person")
+    void shouldFailToSavePerson() {
+        var personMock = getPersonMock();
+        var errorMessage = "Fail to save a person - fail: test fail save a person";
+
+        when(taskDataProviderMapper.toTaskEntityList(any())).thenReturn(getTaskEntityListMock());
+        when(taskRepository.saveAll(any())).thenReturn(getTaskEntityListMock());
+        when(personDataProviderMapper.toPersonEntity(any(), any())).thenReturn(getPeronEntityMock());
+        when(personRepository.save(any())).thenThrow(new RuntimeException("test fail save a person"));
+
+        var exception = assertThrows(DataBaseDataProviderException.class, () -> personByMongoDataProvider.save(personMock));
+
+        assertNotNull(exception);
+        assertEquals(errorMessage, exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Should fail to find a person by id")
+    void shouldFailToFindPersonById() {
+        var errorMessage = "Fail to find a person by id test-id - fail: test fail find person by id";
+
+        when(personRepository.findById(any())).thenThrow(new RuntimeException("test fail find person by id"));
+
+        var exception = assertThrows(DataBaseDataProviderException.class, () -> personByMongoDataProvider.findById("test-id"));
+
+        assertNotNull(exception);
+        assertEquals(errorMessage, exception.getMessage());
+
+        verify(taskRepository, never()).findByIdIn(any());
+    }
+
+    @Test
+    @DisplayName("Should fail to find a person by email")
+    void shouldFailToFindPersonByEmail() {
+        var errorMessage = "Fail to find a person by email test-email - fail: test fail find person by email";
+
+        when(personRepository.findByEmail(any())).thenThrow(new RuntimeException("test fail find person by email"));
+
+        var exception = assertThrows(DataBaseDataProviderException.class, () -> personByMongoDataProvider.findByEmail("test-email"));
+
+        assertNotNull(exception);
+        assertEquals(errorMessage, exception.getMessage());
+
+        verify(taskRepository, never()).findByIdIn(any());
+    }
+
+    @Test
+    @DisplayName("Should fail to update person - fail update all tasks")
+    void shouldFailUpdatePersonFailUpdateAllTasks() {
+        var personMock = getPersonMock();
+        var errorMessage = "Fail to update all person tasks - fail: test fail update all tasks";
+
+        when(taskDataProviderMapper.toTaskEntityList(any())).thenReturn(getTaskEntityListMock());
+        when(taskRepository.saveAll(any())).thenThrow(new RuntimeException("test fail update all tasks"));
+
+        var exception = assertThrows(DataBaseDataProviderException.class, () -> personByMongoDataProvider.update(personMock));
+
+        assertNotNull(exception);
+        assertEquals(errorMessage, exception.getMessage());
+
+        verify(personDataProviderMapper, never()).toPersonEntity(any(), any());
+        verify(personRepository, never()).save(any());
+        verify(taskRepository, never()).findByIdIn(any());
+        verify(personDataProviderMapper, never()).toPerson(any(), any());
+    }
+
+    @Test
+    @DisplayName("Should fail to update person")
+    void shouldFailUpdatePerson() {
+        var personMock = getPersonMock();
+        var errorMessage = "Fail to update a person - fail: test fail update person";
+
+        when(taskDataProviderMapper.toTaskEntityList(any())).thenReturn(getTaskEntityListMock());
+        when(taskRepository.saveAll(any())).thenReturn(getTaskEntityListMock());
+        when(personDataProviderMapper.toPersonEntity(any(), any())).thenReturn(getPeronEntityMock());
+        when(personRepository.save(any())).thenThrow(new RuntimeException("test fail update person"));
+
+        var exception = assertThrows(DataBaseDataProviderException.class, () -> personByMongoDataProvider.update(personMock));
+
+        assertNotNull(exception);
+        assertEquals(errorMessage, exception.getMessage());
+
+        verify(taskRepository, never()).findByIdIn(any());
+        verify(personDataProviderMapper, never()).toPerson(any(), any());
+    }
+
+    @Test
+    @DisplayName("Should fail to delete a person - delete task")
+    void shouldFailToDeletePersonDeleteTask() {
+        var personMock = getPersonMock();
+        var errorMessage = "Fail to delete all person tasks - fail: test delete all tasks";
+
+        when(personDataProviderMapper.toPersonEntity(any(), any())).thenReturn(getPeronEntityMock());
+        doThrow(new RuntimeException("test delete all tasks")).when(taskRepository).deleteAllById(any());
+
+        var exception = assertThrows(DataBaseDataProviderException.class, () -> personByMongoDataProvider.delete(personMock));
+
+        assertNotNull(exception);
+        assertEquals(errorMessage, exception.getMessage());
+
+        verify(personRepository, never()).delete(any());
+    }
+
+    @Test
+    @DisplayName("Should fail to delete a person")
+    void shouldFailToDeletePerson() {
+        var personMock = getPersonMock();
+        var errorMessage = "Fail to delete a person - fail: test delete person";
+
+        when(personDataProviderMapper.toPersonEntity(any(), any())).thenReturn(getPeronEntityMock());
+        doNothing().when(taskRepository).deleteAllById(any());
+        doThrow(new RuntimeException("test delete person")).when(personRepository).delete(any());
+
+        var exception = assertThrows(DataBaseDataProviderException.class, () -> personByMongoDataProvider.delete(personMock));
+
+        assertNotNull(exception);
+        assertEquals(errorMessage, exception.getMessage());
     }
 
     private PersonEntity getPeronEntityMock() {

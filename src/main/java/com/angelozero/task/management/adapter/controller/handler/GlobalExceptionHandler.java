@@ -15,6 +15,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return generateUnprocessableEntityResponse(ex);
     }
 
+    @ExceptionHandler(CacheDataProviderException.class)
+    public ResponseEntity<Object> handleCacheDataProviderException(CacheDataProviderException ex) {
+        return generateUnprocessableEntityResponse(ex);
+    }
+
+    @ExceptionHandler(DataBaseDataProviderException.class)
+    public ResponseEntity<Object> handleDataBaseDataProviderException(DataBaseDataProviderException ex) {
+        return generateUnprocessableEntityResponse(ex);
+    }
+
     @ExceptionHandler(RestDataProviderException.class)
     public ResponseEntity<Object> handleResourceRestDataProviderException(RestDataProviderException ex) {
         return generateUnprocessableEntityResponse(ex);

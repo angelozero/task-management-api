@@ -1,9 +1,7 @@
 package com.angelozero.task.management.adapter.dataprovider;
 
-import com.angelozero.task.management.adapter.config.RabbitMQConfig;
 import com.angelozero.task.management.entity.Event;
 import com.angelozero.task.management.usecase.exception.EventConsumerException;
-import com.angelozero.task.management.usecase.exception.EventPublisherException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AllArgsConstructor;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class EventConsumerByRabbitMQDataProvider {
 
-    private final RabbitMQConfig rabbitMQConfig;
     private static final ObjectMapper objectMapper;
 
     static {
