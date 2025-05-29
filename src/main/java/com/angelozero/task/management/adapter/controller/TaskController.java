@@ -5,16 +5,12 @@ import com.angelozero.task.management.adapter.controller.mapper.TaskRequestMappe
 import com.angelozero.task.management.adapter.controller.rest.request.TaskRequest;
 import com.angelozero.task.management.adapter.controller.rest.response.PagedResponse;
 import com.angelozero.task.management.adapter.controller.rest.response.TaskResponse;
-import com.angelozero.task.management.adapter.dataprovider.EventEntityByPostgresDataProvider;
-import com.angelozero.task.management.adapter.dataprovider.EventPublisherByRabbitMQDataProvider;
-import com.angelozero.task.management.entity.Event;
 import com.angelozero.task.management.usecase.services.task.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController

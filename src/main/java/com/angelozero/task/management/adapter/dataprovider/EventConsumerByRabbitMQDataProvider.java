@@ -1,5 +1,6 @@
 package com.angelozero.task.management.adapter.dataprovider;
 
+import com.angelozero.task.management.adapter.dataprovider.jpa.repository.postgres.reader.EventReaderDataBaseRepository;
 import com.angelozero.task.management.entity.Event;
 import com.angelozero.task.management.usecase.exception.EventConsumerException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class EventConsumerByRabbitMQDataProvider {
 
     private static final ObjectMapper objectMapper;
+    private final EventReaderDataBaseRepository eventReaderDataBaseRepository;
 
     static {
         objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());

@@ -19,12 +19,12 @@
 - Dual datasource (DataSourceOrchestration.md)
   - RabbitMQ (RabbitMQ.md)
   - [img.png](images/rabbitmq-interface.png)
-  - Saves an event to the database
+  - Saves an event to the database ( write database )
   - Triggers an event in the queue
   - Consumes the event from the queue
-  - Saves the event to the second database
-  - If a read was triggered, updates the saved event in the second database
-  - Consumes events from the second database for querying
+  - Saves the event to the second database ( read database )
+  - If a read service was triggered, updates the saved event in the second database ( read database )
+  - Consumes events from the second database for querying ( read database )
 
 ## To do
 - JWT Authentication with Keycloak

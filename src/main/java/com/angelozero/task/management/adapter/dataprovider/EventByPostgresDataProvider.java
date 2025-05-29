@@ -1,5 +1,6 @@
 package com.angelozero.task.management.adapter.dataprovider;
 
+import com.angelozero.task.management.adapter.dataprovider.jpa.repository.postgres.reader.EventReaderDataBaseRepository;
 import com.angelozero.task.management.adapter.dataprovider.jpa.repository.postgres.writer.EventWriterDataBaseRepository;
 import com.angelozero.task.management.adapter.dataprovider.mapper.EventDataProviderMapper;
 import com.angelozero.task.management.entity.Event;
@@ -12,11 +13,18 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class EventEntityByPostgresDataProvider implements EventGateway {
+public class EventByPostgresDataProvider implements EventGateway {
 
     private final EventWriterDataBaseRepository eventWriterDataBaseRepository;
+    private final EventReaderDataBaseRepository eventReaderDataBaseRepository;
     private final EventDataProviderMapper eventDataProviderMapper;
 
+
+    @Override
+    public Event getById(Integer id) {
+        var eventEntity = eventReaderDataBaseRepository.findById(id).orElse(null);
+        return eventDataProviderMapper.toEvent(eventEntity);
+    }
 
     @Override
     public Event save(Event event) {
