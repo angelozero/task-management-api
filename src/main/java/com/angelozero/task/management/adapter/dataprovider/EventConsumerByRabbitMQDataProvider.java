@@ -30,7 +30,7 @@ public class EventConsumerByRabbitMQDataProvider {
             System.out.println("[Consumer] Received EventEntity: " + receivedEvent);
             System.out.println("[Consumer] Processing EventType: " + receivedEvent.eventType());
             System.out.println("[Consumer] Processing Message: " + receivedEvent.message());
-            // Sua lógica de processamento do evento aqui
+            // TODO Sua lógica de processamento do evento aqui
 
         } catch (Exception ex) {
             System.err.println("[Consumer] Error deserializing message: " + ex.getMessage());

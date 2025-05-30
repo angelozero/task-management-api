@@ -4,7 +4,7 @@ import com.angelozero.task.management.entity.Event;
 import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.gateway.EventGateway;
 import com.angelozero.task.management.usecase.gateway.PersonGateway;
-import com.angelozero.task.management.usecase.gateway.PublishEventGateway;
+import com.angelozero.task.management.usecase.gateway.EventPublishGateway;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class PublishEventUseCase {
 
-    private final PublishEventGateway publishEventGateway;
+    private final EventPublishGateway eventPublishGateway;
     private final EventGateway eventGateway;
     private final PersonGateway personGateway;
     private final TaskGateway taskGateway;
@@ -42,7 +42,7 @@ public class PublishEventUseCase {
         var eventSaved = eventGateway.save(event);
         log.info("Event {} saved with success", eventSaved.id());
 
-        publishEventGateway.publish(eventSaved);
+        eventPublishGateway.publish(eventSaved);
         log.info("Event {} published with success", event.id());
     }
 }

@@ -7,7 +7,7 @@ import com.angelozero.task.management.entity.status.Completed;
 import com.angelozero.task.management.usecase.exception.BusinessException;
 import com.angelozero.task.management.usecase.gateway.EventGateway;
 import com.angelozero.task.management.usecase.gateway.PersonGateway;
-import com.angelozero.task.management.usecase.gateway.PublishEventGateway;
+import com.angelozero.task.management.usecase.gateway.EventPublishGateway;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;
 import com.angelozero.task.management.usecase.services.event.PublishEventUseCase;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 public class PublishEventUseCaseTest {
 
     @Mock
-    private PublishEventGateway publishEventGateway;
+    private EventPublishGateway eventPublishGateway;
 
     @Mock
     private EventGateway eventGateway;
@@ -53,7 +53,7 @@ public class PublishEventUseCaseTest {
         when(personGateway.findByEmail(any())).thenReturn(personMock);
         when(taskGateway.findById(any())).thenReturn(taskMock);
         when(eventGateway.save(any())).thenReturn(eventMock);
-        doNothing().when(publishEventGateway).publish(any());
+        doNothing().when(eventPublishGateway).publish(any());
 
         assertDoesNotThrow(() -> publishEventUseCase.execute("taskId", "email", "eventType", "message"));
     }
@@ -72,7 +72,7 @@ public class PublishEventUseCaseTest {
 
         verify(taskGateway, never()).findById(any());
         verify(eventGateway, never()).save(any());
-        verify(publishEventGateway, never()).publish(any());
+        verify(eventPublishGateway, never()).publish(any());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class PublishEventUseCaseTest {
         assertEquals(errorMessage, exception.getMessage());
 
         verify(eventGateway, never()).save(any());
-        verify(publishEventGateway, never()).publish(any());
+        verify(eventPublishGateway, never()).publish(any());
     }
 
     private Event getEventMock() {

@@ -4,6 +4,7 @@ package com.angelozero.task.management.adapter.dataprovider;
 import com.angelozero.task.management.adapter.config.RabbitMQConfig;
 import com.angelozero.task.management.entity.Event;
 import com.angelozero.task.management.usecase.exception.EventPublisherException;
+import com.angelozero.task.management.usecase.gateway.EventPublishGateway;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class EventPublisherByRabbitMQDataProvider {
+public class EventPublisherByRabbitMQDataProvider implements EventPublishGateway {
 
     private final RabbitMQConfig rabbitMQConfig;
     private final AmqpTemplate rabbitTemplate;
@@ -24,16 +25,19 @@ public class EventPublisherByRabbitMQDataProvider {
         objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
     }
 
+    @Override
     public void publish(Event event) {
         try {
-            var messageJson = objectMapper.writeValueAsString(event);
-            rabbitTemplate.convertAndSend(rabbitMQConfig.getExchangeName(), rabbitMQConfig.getRoutingKey(), messageJson);
-            System.out.println("[Producer] Sent: " + messageJson);
+            var message = objectMapper.writeValueAsString(event);
+            var exchangeName = rabbitMQConfig.getExchangeName();
+            var routingKey = rabbitMQConfig.getRoutingKey();
+
+            rabbitTemplate.convertAndSend(exchangeName, routingKey, message);
+            log.info("[Producer] Message Sent: {}", message);
 
         } catch (Exception ex) {
             log.error("[Producer] Error sending message: {}", ex.getMessage());
             throw new EventPublisherException("[Producer] Error sending message: " + ex.getMessage());
         }
-
     }
 }

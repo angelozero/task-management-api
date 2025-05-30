@@ -4,6 +4,6 @@ import com.angelozero.task.management.entity.Event;
 
 public interface EventGateway {
 
-    Event getById(Integer id);
     Event save(Event event);
+    Event getById(Integer id);
 }

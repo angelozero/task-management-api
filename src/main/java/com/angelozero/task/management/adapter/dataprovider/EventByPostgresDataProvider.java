@@ -19,13 +19,6 @@ public class EventByPostgresDataProvider implements EventGateway {
     private final EventReaderDataBaseRepository eventReaderDataBaseRepository;
     private final EventDataProviderMapper eventDataProviderMapper;
 
-
-    @Override
-    public Event getById(Integer id) {
-        var eventEntity = eventReaderDataBaseRepository.findById(id).orElse(null);
-        return eventDataProviderMapper.toEvent(eventEntity);
-    }
-
     @Override
     public Event save(Event event) {
         try {
@@ -38,5 +31,11 @@ public class EventByPostgresDataProvider implements EventGateway {
             log.error("Fail to save an Event into the database - fail: {}", ex.getMessage());
             throw new DataBaseDataProviderException("Fail to save an Event into the database - fail: " + ex.getMessage());
         }
+    }
+
+    @Override
+    public Event getById(Integer id) {
+        var eventEntity = eventReaderDataBaseRepository.findById(id).orElse(null);
+        return eventDataProviderMapper.toEvent(eventEntity);
     }
 }
