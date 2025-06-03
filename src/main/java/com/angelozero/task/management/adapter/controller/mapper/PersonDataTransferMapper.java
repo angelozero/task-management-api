@@ -4,16 +4,12 @@ import com.angelozero.task.management.adapter.controller.datatransfer.PersonInpu
 import com.angelozero.task.management.adapter.controller.datatransfer.PersonOutput;
 import com.angelozero.task.management.adapter.controller.datatransfer.TaskInput;
 import com.angelozero.task.management.adapter.controller.datatransfer.TaskOutput;
-import com.angelozero.task.management.adapter.controller.rest.request.TaskRequest;
-import com.angelozero.task.management.adapter.controller.rest.response.TaskResponse;
 import com.angelozero.task.management.entity.Person;
 import com.angelozero.task.management.entity.Task;
 import com.angelozero.task.management.entity.status.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface PersonDataTransferMapper {
@@ -27,9 +23,9 @@ public interface PersonDataTransferMapper {
 
     @Named("toTask")
     default Task toTask(TaskInput taskInput) {
-        var statusType = StatusType.fromCode(taskInput.statusCode());
+        var statusType = EventStatusType.fromCode(taskInput.statusCode());
         var statusTask = switch (statusType) {
-            case CUSTOM -> new CustomStatusTask();
+            case CUSTOM -> new CustomEventStatusTask();
             case PENDING -> new Pending();
             case IN_PROGRESS -> new InProgress();
             case COMPLETED -> new Completed();

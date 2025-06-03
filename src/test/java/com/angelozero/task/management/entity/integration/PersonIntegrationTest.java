@@ -6,7 +6,6 @@ import com.angelozero.task.management.entity.integration.config.PersonIntegratio
 import com.angelozero.task.management.entity.integration.response.GraphQLResponse;
 import com.angelozero.task.management.entity.status.Blocked;
 import com.angelozero.task.management.entity.status.Pending;
-import com.angelozero.task.management.entity.status.StatusType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Test;

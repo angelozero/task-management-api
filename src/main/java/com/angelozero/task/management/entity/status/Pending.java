@@ -9,22 +9,22 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public final class Pending implements StatusTask {
+public final class Pending implements EventStatusTask {
 
     private String info;
 
     @Override
-    public StatusType getType() {
-        return StatusType.PENDING;
+    public EventStatusType getType() {
+        return EventStatusType.PENDING;
     }
 
     @Override
     public String getName() {
-        return StatusType.PENDING.getDescription();
+        return EventStatusType.PENDING.getDescription();
     }
 
     @Override
     public int getCode() {
-        return StatusType.PENDING.getCode();
+        return EventStatusType.PENDING.getCode();
     }
 }

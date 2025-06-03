@@ -27,9 +27,9 @@ public interface PersonDataProviderMapper {
 
     @Named("toTaskFromEntity")
     default Task toTaskFromEntity(TaskEntity taskEntity) {
-        var statusType = StatusType.fromCode(taskEntity.statusCode());
+        var statusType = EventStatusType.fromCode(taskEntity.statusCode());
         var statusTask = switch (statusType) {
-            case CUSTOM -> new CustomStatusTask();
+            case CUSTOM -> new CustomEventStatusTask();
             case PENDING -> new Pending();
             case IN_PROGRESS -> new InProgress();
             case COMPLETED -> new Completed();

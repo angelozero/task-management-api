@@ -1,6 +1,6 @@
 package com.angelozero.task.management.entity.unit.dataprovider;
 
-import com.angelozero.task.management.adapter.dataprovider.EventByPostgresDataProvider;
+import com.angelozero.task.management.adapter.dataprovider.EventWriterByPostgresDataProvider;
 import com.angelozero.task.management.adapter.dataprovider.jpa.entity.EventEntity;
 import com.angelozero.task.management.adapter.dataprovider.jpa.repository.postgres.reader.EventReaderDataBaseRepository;
 import com.angelozero.task.management.adapter.dataprovider.jpa.repository.postgres.writer.EventWriterDataBaseRepository;
@@ -21,19 +21,16 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class EventByPostgresDataProviderTest {
+public class EventWriterByPostgresDataProviderTest {
 
     @Mock
     private EventWriterDataBaseRepository eventWriterDataBaseRepository;
 
     @Mock
-    private EventReaderDataBaseRepository eventReaderDataBaseRepository;
-
-    @Mock
     private EventDataProviderMapper eventDataProviderMapper;
 
     @InjectMocks
-    private EventByPostgresDataProvider eventByPostgresDataProvider;
+    private EventWriterByPostgresDataProvider eventByPostgresDataProvider;
 
     @Test
     @DisplayName("Should save an event with success")

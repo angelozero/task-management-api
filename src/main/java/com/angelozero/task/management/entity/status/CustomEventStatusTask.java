@@ -16,22 +16,22 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public non-sealed class CustomStatusTask implements StatusTask {
+public non-sealed class CustomEventStatusTask implements EventStatusTask {
 
     private String info;
 
     @Override
-    public StatusType getType() {
-        return StatusType.CUSTOM;
+    public EventStatusType getType() {
+        return EventStatusType.CUSTOM;
     }
 
     @Override
     public String getName() {
-        return StatusType.CUSTOM.getDescription();
+        return EventStatusType.CUSTOM.getDescription();
     }
 
     @Override
     public int getCode() {
-        return StatusType.CUSTOM.getCode();
+        return EventStatusType.CUSTOM.getCode();
     }
 }

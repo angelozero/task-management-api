@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ReviewStatusTask extends CustomStatusTask {
+public class ReviewEventStatusTask extends CustomEventStatusTask {
 
     private String reviewerName;
 

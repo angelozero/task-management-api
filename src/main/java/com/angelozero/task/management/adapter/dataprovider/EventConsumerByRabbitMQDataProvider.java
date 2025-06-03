@@ -1,8 +1,8 @@
 package com.angelozero.task.management.adapter.dataprovider;
 
-import com.angelozero.task.management.adapter.dataprovider.jpa.repository.postgres.reader.EventReaderDataBaseRepository;
 import com.angelozero.task.management.entity.Event;
 import com.angelozero.task.management.usecase.exception.EventConsumerException;
+import com.angelozero.task.management.usecase.gateway.event.EventConsumerInputBoundaryGateway;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AllArgsConstructor;
@@ -16,24 +16,22 @@ import org.springframework.stereotype.Service;
 public class EventConsumerByRabbitMQDataProvider {
 
     private static final ObjectMapper objectMapper;
-    private final EventReaderDataBaseRepository eventReaderDataBaseRepository;
+    private EventConsumerInputBoundaryGateway eventConsumerInputBoundaryGateway;
 
     static {
         objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
     }
 
     @RabbitListener(queues = "${rabbitmq.queue.name}")
-    public void consumer(String messageJson) {
-        System.out.println("[Consumer] Received JSON: " + messageJson);
+    public void consumer(String message) {
+        log.info("[Consumer] Received message: {}", message);
+
         try {
-            Event receivedEvent = objectMapper.readValue(messageJson, Event.class);
-            System.out.println("[Consumer] Received EventEntity: " + receivedEvent);
-            System.out.println("[Consumer] Processing EventType: " + receivedEvent.eventType());
-            System.out.println("[Consumer] Processing Message: " + receivedEvent.message());
-            // TODO Sua lógica de processamento do evento aqui ... menos hoje, e hoje tambem nao, e adivinha ? nem fu#$%!@
+            var receivedEvent = objectMapper.readValue(message, Event.class);
+            eventConsumerInputBoundaryGateway.execute(receivedEvent);
 
         } catch (Exception ex) {
-            System.err.println("[Consumer] Error deserializing message: " + ex.getMessage());
+            log.error("[Consumer] Error deserializing message: {}", ex.getMessage());
             throw new EventConsumerException("[Consumer] Error deserializing message: " + ex.getMessage());
         }
     }

@@ -25,19 +25,19 @@ public interface TaskDataProviderMapper {
     Task toTask(TaskEntity taskEntity);
 
     @Named("statusTaskToName")
-    default String mapStatusTaskToName(StatusTask statusTask) {
-        return statusTask.getName();
+    default String mapStatusTaskToName(EventStatusTask EventStatusTask) {
+        return EventStatusTask.getName();
     }
 
     @Named("statusTaskToCode")
-    default int mapStatusTaskToCode(StatusTask statusTask) {
-        return statusTask.getCode();
+    default int mapStatusTaskToCode(EventStatusTask EventStatusTask) {
+        return EventStatusTask.getCode();
     }
 
     @Named("mapTaskEntityToStatusTask")
-    default StatusTask mapTaskEntityToStatusTask(TaskEntity taskEntity) {
+    default EventStatusTask mapTaskEntityToStatusTask(TaskEntity taskEntity) {
         return switch (taskEntity.statusCode()) {
-            case 0 -> new CustomStatusTask();
+            case 0 -> new CustomEventStatusTask();
             case 1 -> new Pending();
             case 2 -> new InProgress();
             case 3 -> new Completed();

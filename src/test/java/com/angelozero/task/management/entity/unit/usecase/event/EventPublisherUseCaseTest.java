@@ -5,11 +5,11 @@ import com.angelozero.task.management.entity.Person;
 import com.angelozero.task.management.entity.Task;
 import com.angelozero.task.management.entity.status.Completed;
 import com.angelozero.task.management.usecase.exception.BusinessException;
-import com.angelozero.task.management.usecase.gateway.EventGateway;
+import com.angelozero.task.management.usecase.gateway.event.EventWriterGateway;
 import com.angelozero.task.management.usecase.gateway.PersonGateway;
-import com.angelozero.task.management.usecase.gateway.EventPublishGateway;
+import com.angelozero.task.management.usecase.gateway.event.EventPublishGateway;
 import com.angelozero.task.management.usecase.gateway.TaskGateway;
-import com.angelozero.task.management.usecase.services.event.PublishEventUseCase;
+import com.angelozero.task.management.usecase.services.event.EventPublisherUseCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,13 +26,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class PublishEventUseCaseTest {
+public class EventPublisherUseCaseTest {
 
     @Mock
     private EventPublishGateway eventPublishGateway;
 
     @Mock
-    private EventGateway eventGateway;
+    private EventWriterGateway eventWriterGateway;
 
     @Mock
     private PersonGateway personGateway;
@@ -41,7 +41,7 @@ public class PublishEventUseCaseTest {
     private TaskGateway taskGateway;
 
     @InjectMocks
-    private PublishEventUseCase publishEventUseCase;
+    private EventPublisherUseCase eventPublisherUseCase;
 
     @Test
     @DisplayName("Should publish an event with success")
@@ -52,10 +52,10 @@ public class PublishEventUseCaseTest {
 
         when(personGateway.findByEmail(any())).thenReturn(personMock);
         when(taskGateway.findById(any())).thenReturn(taskMock);
-        when(eventGateway.save(any())).thenReturn(eventMock);
+        when(eventWriterGateway.save(any())).thenReturn(eventMock);
         doNothing().when(eventPublishGateway).publish(any());
 
-        assertDoesNotThrow(() -> publishEventUseCase.execute("taskId", "email", "eventType", "message"));
+        assertDoesNotThrow(() -> eventPublisherUseCase.execute("taskId", "email",  "message"));
     }
 
     @Test
@@ -65,13 +65,13 @@ public class PublishEventUseCaseTest {
 
         when(personGateway.findByEmail(any())).thenReturn(null);
 
-        var exception = assertThrows(BusinessException.class, () -> publishEventUseCase.execute("taskId", "email-test", "eventType", "message"));
+        var exception = assertThrows(BusinessException.class, () -> eventPublisherUseCase.execute("taskId", "email-test",  "message"));
 
         assertNotNull(exception);
         assertEquals(errorMessage, exception.getMessage());
 
         verify(taskGateway, never()).findById(any());
-        verify(eventGateway, never()).save(any());
+        verify(eventWriterGateway, never()).save(any());
         verify(eventPublishGateway, never()).publish(any());
     }
 
@@ -83,20 +83,21 @@ public class PublishEventUseCaseTest {
         when(personGateway.findByEmail(any())).thenReturn(getPersonMock());
         when(taskGateway.findById(any())).thenReturn(null);
 
-        var exception = assertThrows(BusinessException.class, () -> publishEventUseCase.execute("taskId", "email-test", "eventType", "message"));
+        var exception = assertThrows(BusinessException.class, () -> eventPublisherUseCase.execute("taskId", "email-test",  "message"));
 
         assertNotNull(exception);
         assertEquals(errorMessage, exception.getMessage());
 
-        verify(eventGateway, never()).save(any());
+        verify(eventWriterGateway, never()).save(any());
         verify(eventPublishGateway, never()).publish(any());
     }
 
     private Event getEventMock() {
         return new Event(0,
-                "eventType",
+                
                 "taskId",
                 "personId",
+                "user-id",
                 LocalDateTime.now(),
                 false,
                 "message");

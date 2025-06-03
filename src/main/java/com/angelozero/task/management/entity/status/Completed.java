@@ -9,22 +9,22 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public final class Completed implements StatusTask {
+public final class Completed implements EventStatusTask {
 
     private String info;
 
     @Override
-    public StatusType getType() {
-        return StatusType.COMPLETED;
+    public EventStatusType getType() {
+        return EventStatusType.COMPLETED;
     }
 
     @Override
     public String getName() {
-        return StatusType.COMPLETED.getDescription();
+        return EventStatusType.COMPLETED.getDescription();
     }
 
     @Override
     public int getCode() {
-        return StatusType.COMPLETED.getCode();
+        return EventStatusType.COMPLETED.getCode();
     }
 }

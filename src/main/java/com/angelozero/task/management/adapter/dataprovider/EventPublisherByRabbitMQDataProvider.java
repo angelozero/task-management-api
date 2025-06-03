@@ -4,7 +4,7 @@ package com.angelozero.task.management.adapter.dataprovider;
 import com.angelozero.task.management.adapter.config.RabbitMQConfig;
 import com.angelozero.task.management.entity.Event;
 import com.angelozero.task.management.usecase.exception.EventPublisherException;
-import com.angelozero.task.management.usecase.gateway.EventPublishGateway;
+import com.angelozero.task.management.usecase.gateway.event.EventPublishGateway;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AllArgsConstructor;

@@ -9,22 +9,22 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public final class InProgress implements StatusTask {
+public final class InProgress implements EventStatusTask {
 
     private String info;
 
     @Override
-    public StatusType getType() {
-        return StatusType.IN_PROGRESS;
+    public EventStatusType getType() {
+        return EventStatusType.IN_PROGRESS;
     }
 
     @Override
     public String getName() {
-        return StatusType.IN_PROGRESS.getDescription();
+        return EventStatusType.IN_PROGRESS.getDescription();
     }
 
     @Override
     public int getCode() {
-        return StatusType.IN_PROGRESS.getCode();
+        return EventStatusType.IN_PROGRESS.getCode();
     }
 }

@@ -4,7 +4,7 @@ import com.angelozero.task.management.usecase.exception.StatusTypeException;
 import lombok.Getter;
 
 @Getter
-public enum StatusType {
+public enum EventStatusType {
     CUSTOM(0, "Custom"),
     PENDING(1, "Pending"),
     IN_PROGRESS(2, "In progress"),
@@ -14,13 +14,13 @@ public enum StatusType {
     private final int code;
     private final String description;
 
-    StatusType(int code, String description) {
+    EventStatusType(int code, String description) {
         this.code = code;
         this.description = description;
     }
 
-    public static StatusType fromCode(int code) {
-        for (StatusType type : StatusType.values()) {
+    public static EventStatusType fromCode(int code) {
+        for (EventStatusType type : EventStatusType.values()) {
             if (type.code == code) {
                 return type;
             }

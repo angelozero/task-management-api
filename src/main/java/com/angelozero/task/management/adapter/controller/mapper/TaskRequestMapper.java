@@ -23,9 +23,9 @@ public interface TaskRequestMapper {
 
     List<TaskResponse> toTaskResponseList(List<Task> taskList);
 
-    default StatusTask mapStatusCodeToStatusTask(int statusCode) {
+    default EventStatusTask mapStatusCodeToStatusTask(int statusCode) {
         return switch (statusCode) {
-            case 0 -> new CustomStatusTask();
+            case 0 -> new CustomEventStatusTask();
             case 1 -> new Pending();
             case 2 -> new InProgress();
             case 3 -> new Completed();
