@@ -27,4 +27,6 @@ public class EventController {
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    //TODO get an event information and update read status
 }
