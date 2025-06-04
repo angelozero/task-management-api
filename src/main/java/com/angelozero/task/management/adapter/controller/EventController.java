@@ -29,4 +29,5 @@ public class EventController {
     }
 
     //TODO get an event information and update read status
+    // today was playing no mans sky
 }
