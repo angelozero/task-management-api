@@ -79,6 +79,61 @@ public class EventReaderByPostgresDataProviderTest {
         verify(eventDataProviderMapper, never()).toEvent(any());
     }
 
+    /**
+     *
+     */
+    @Test
+    @DisplayName("Should get an event by person id with success")
+    void shouldGetEventByPersonIdWithSuccess() {
+        var personId = "1";
+        var eventMock = getEventMock();
+        var eventEntityMock = getEventEntityMock();
+
+        when(eventReaderDataBaseRepository.findByUserId(any(String.class))).thenReturn(Optional.of(eventEntityMock));
+        when(eventDataProviderMapper.toEvent(any())).thenReturn(eventMock);
+
+        var response = eventReaderByPostgresDataProvider.getByPersonId(personId);
+
+        assertNotNull(response);
+        assertEquals(eventMock, response);
+        verify(eventReaderDataBaseRepository, times(1)).findByUserId(personId);
+        verify(eventDataProviderMapper, times(1)).toEvent(eventEntityMock);
+    }
+
+    @Test
+    @DisplayName("Should return null when event not found by person id")
+    void shouldReturnNullWhenEventNotFoundByPersonId() {
+        var personId = "1";
+        var eventEntityMock = getEventEntityMock();
+
+        when(eventReaderDataBaseRepository.findByUserId(any(String.class))).thenReturn(Optional.empty());
+        when(eventDataProviderMapper.toEvent(any())).thenReturn(null);
+
+        var response = eventReaderByPostgresDataProvider.getByPersonId(personId);
+
+        assertNull(response);
+        verify(eventReaderDataBaseRepository, times(1)).findByUserId(personId);
+    }
+
+    @Test
+    @DisplayName("Should fail to get an event by person id")
+    void shouldFailToGetEventByPersonId() {
+        var personId = "1";
+        var errorMessage = "Fail to get an Event into the reader database by Person id - Fail: test - get by person id failure";
+
+        when(eventReaderDataBaseRepository.findByUserId(any(String.class))).thenThrow(new RuntimeException("test - get by person id failure"));
+
+        var exception = assertThrows(DataBaseDataProviderException.class, () -> eventReaderByPostgresDataProvider.getByPersonId(personId));
+
+        assertNotNull(exception);
+        assertEquals(errorMessage, exception.getMessage());
+        verify(eventDataProviderMapper, never()).toEvent(any());
+    }
+
+    /**
+     *
+     */
+
     @Test
     @DisplayName("Should save an event with success")
     void shouldSaveEventWithSuccess() {

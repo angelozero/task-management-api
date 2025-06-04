@@ -31,6 +31,19 @@ public class EventReaderByPostgresDataProvider implements EventReaderGateway {
     }
 
     @Override
+    public Event getByPersonId(String id) {
+        try {
+            var eventEntity = eventReaderDataBaseRepository.findByUserId(id).orElse(null);
+
+            return eventDataProviderMapper.toEvent(eventEntity);
+
+        } catch (Exception ex) {
+            log.error("Fail to get an Event into the reader database by Person id - Fail: {}", ex.getMessage());
+            throw new DataBaseDataProviderException("Fail to get an Event into the reader database by Person id - Fail: " + ex.getMessage());
+        }
+    }
+
+    @Override
     public Event save(Event event) {
         try {
             var eventEntity = eventDataProviderMapper.toEventEntity(event);

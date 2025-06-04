@@ -42,7 +42,8 @@ public class EventPublisherUseCase {
 
         var event = new Event(null,
                 eventType,
-                task.id(), person.id(),
+                task.id(),
+                person.id(),
                 LocalDateTime.now(),
                 false,
                 message);

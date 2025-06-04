@@ -6,5 +6,7 @@ public interface EventReaderGateway {
 
     Event getById(Integer id);
 
+    Event getByPersonId(String id);
+
     Event save(Event event);
 }
