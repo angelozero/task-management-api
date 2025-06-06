@@ -48,5 +48,5 @@ public class EventController {
         return ResponseEntity.ok(eventResponse);
     }
 
-    //TODO update read status
+    //TODO update read status not today
 }
