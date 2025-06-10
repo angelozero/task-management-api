@@ -49,7 +49,9 @@ public class EventController {
     }
 
     @PutMapping()
-    public ResponseEntity<Void> updateReadStatus(@RequestParam Integer eventId, @RequestParam String eventPersonEmail, @RequestParam boolean isRead) {
+    public ResponseEntity<Void> updateReadStatus(@RequestParam(required = false) Integer eventId,
+                                                 @RequestParam(required = false) String eventPersonEmail,
+                                                 @RequestParam boolean isRead) {
         if (eventId != null) {
             readEventByEventIdUseCase.execute(eventId, isRead);
 
