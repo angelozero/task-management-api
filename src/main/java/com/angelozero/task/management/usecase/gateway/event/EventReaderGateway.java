@@ -9,4 +9,8 @@ public interface EventReaderGateway {
     Event getByPersonId(String id);
 
     Event save(Event event);
+
+    void setReadInfoByEventId(Integer eventId, boolean isRead);
+
+    void setReadInfoByPersonId(String personId, boolean isRead);
 }

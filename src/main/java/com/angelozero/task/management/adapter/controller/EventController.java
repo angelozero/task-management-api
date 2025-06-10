@@ -3,9 +3,7 @@ package com.angelozero.task.management.adapter.controller;
 import com.angelozero.task.management.adapter.controller.mapper.EventRequestMapper;
 import com.angelozero.task.management.adapter.controller.rest.request.EventRequest;
 import com.angelozero.task.management.adapter.controller.rest.response.EventResponse;
-import com.angelozero.task.management.usecase.services.event.GetEventById;
-import com.angelozero.task.management.usecase.services.event.EventPublisherUseCase;
-import com.angelozero.task.management.usecase.services.event.GetEventByPersonEmail;
+import com.angelozero.task.management.usecase.services.event.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +17,8 @@ public class EventController {
     private final EventPublisherUseCase eventPublisherUseCase;
     private final GetEventById getEventById;
     private final GetEventByPersonEmail getEventByPersonEmail;
+    private final ReadEventByEventPersonEmailUseCase readEventByEventPersonEmailUseCase;
+    private final ReadEventByEventIdUseCase readEventByEventIdUseCase;
     private final EventRequestMapper eventRequestMapper;
 
     @PostMapping
@@ -48,5 +48,18 @@ public class EventController {
         return ResponseEntity.ok(eventResponse);
     }
 
-    //TODO update read status not today... its friday
+    @PutMapping()
+    public ResponseEntity<Void> updateReadStatus(@RequestParam Integer eventId, @RequestParam String eventPersonEmail, @RequestParam boolean isRead) {
+        if (eventId != null) {
+            readEventByEventIdUseCase.execute(eventId, isRead);
+
+        } else if (eventPersonEmail != null && !eventPersonEmail.isBlank()) {
+            readEventByEventPersonEmailUseCase.execute(eventPersonEmail, isRead);
+
+        } else {
+            return ResponseEntity.badRequest().header("error message",
+                    "the values \"event id\" or \"event id\" should not be null or empty").build();
+        }
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -56,4 +56,38 @@ public class EventReaderByPostgresDataProvider implements EventReaderGateway {
             throw new DataBaseDataProviderException("Fail to save an Event into the reader database - Fail: " + ex.getMessage());
         }
     }
+
+    @Override
+    public void setReadInfoByEventId(Integer eventId, boolean isRead) {
+        try {
+            var event = getById(eventId);
+
+            var eventEntity = eventDataProviderMapper.toEventEntity(event);
+            eventEntity.setRead(isRead);
+
+            var eventToUpdate = eventDataProviderMapper.toEvent(eventEntity);
+            save(eventToUpdate);
+
+        } catch (Exception ex) {
+            log.error("Fail to update Event read status by event id into the reader database - Fail: {}", ex.getMessage());
+            throw new DataBaseDataProviderException("Fail to update Event read status by event id into the reader database - Fail: " + ex.getMessage());
+        }
+    }
+
+    @Override
+    public void setReadInfoByPersonId(String personId, boolean isRead) {
+        try {
+            var event = getByPersonId(personId);
+
+            var eventEntity = eventDataProviderMapper.toEventEntity(event);
+            eventEntity.setRead(isRead);
+
+            var eventToUpdate = eventDataProviderMapper.toEvent(eventEntity);
+            save(eventToUpdate);
+
+        } catch (Exception ex) {
+            log.error("Fail to update Event read status by event person id into the reader database - Fail: {}", ex.getMessage());
+            throw new DataBaseDataProviderException("Fail to update Event read status by event person id into the reader database - Fail: " + ex.getMessage());
+        }
+    }
 }

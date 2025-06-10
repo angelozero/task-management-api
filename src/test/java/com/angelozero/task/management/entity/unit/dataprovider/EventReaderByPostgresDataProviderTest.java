@@ -171,6 +171,127 @@ public class EventReaderByPostgresDataProviderTest {
         verify(eventDataProviderMapper, never()).toEvent(any());
     }
 
+    @Test
+    @DisplayName("Should set read info by event ID with success")
+    void shouldSetReadInfoByEventIdWithSuccess() {
+        var eventId = 1;
+        var isRead = true;
+        var eventMock = getEventMock();
+        var eventEntityMock = getEventEntityMock();
+
+        when(eventReaderDataBaseRepository.findById(eventId)).thenReturn(Optional.of(eventEntityMock));
+        when(eventDataProviderMapper.toEvent(eventEntityMock)).thenReturn(eventMock);
+        when(eventDataProviderMapper.toEventEntity(any(Event.class))).thenReturn(eventEntityMock);
+        when(eventReaderDataBaseRepository.save(any(EventEntity.class))).thenReturn(eventEntityMock);
+        when(eventDataProviderMapper.toEvent(eventEntityMock)).thenReturn(eventMock);
+
+
+        eventReaderByPostgresDataProvider.setReadInfoByEventId(eventId, isRead);
+
+    }
+
+    @Test
+    @DisplayName("Should fail to set read info by event ID if getById fails")
+    void shouldFailSetReadInfoByEventIdWhenGetByIdFails() {
+        var eventId = 1;
+        var isRead = true;
+        var errorMessage = "Fail to update Event read status by event id into the reader database - Fail: Fail to get an Event into the reader database by id - Fail: test - get by id failure";
+
+        when(eventReaderDataBaseRepository.findById(eventId)).thenThrow(new RuntimeException("test - get by id failure"));
+
+        var exception = assertThrows(DataBaseDataProviderException.class,
+                () -> eventReaderByPostgresDataProvider.setReadInfoByEventId(eventId, isRead));
+
+        assertNotNull(exception);
+        assertEquals(errorMessage, exception.getMessage());
+        verify(eventReaderDataBaseRepository, times(1)).findById(eventId);
+        verify(eventDataProviderMapper, never()).toEvent(any(EventEntity.class));
+        verify(eventDataProviderMapper, never()).toEventEntity(any(Event.class));
+        verify(eventReaderDataBaseRepository, never()).save(any(EventEntity.class));
+    }
+
+    @Test
+    @DisplayName("Should fail to set read info by event ID if save fails")
+    void shouldFailSetReadInfoByEventIdWhenSaveFails() {
+        var eventId = 1;
+        var isRead = true;
+        var eventMock = getEventMock();
+        var eventEntityMock = getEventEntityMock();
+        var errorMessage = "Fail to update Event read status by event id into the reader database - Fail: Fail to save an Event into the reader database - Fail: test - save failure";
+
+
+        when(eventReaderDataBaseRepository.findById(eventId)).thenReturn(Optional.of(eventEntityMock));
+        when(eventDataProviderMapper.toEvent(eventEntityMock)).thenReturn(eventMock);
+        when(eventDataProviderMapper.toEventEntity(any(Event.class))).thenReturn(eventEntityMock);
+        when(eventReaderDataBaseRepository.save(any(EventEntity.class))).thenThrow(new RuntimeException("test - save failure"));
+
+
+        var exception = assertThrows(DataBaseDataProviderException.class,
+                () -> eventReaderByPostgresDataProvider.setReadInfoByEventId(eventId, isRead));
+
+        assertNotNull(exception);
+        assertEquals(errorMessage, exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Should set read info by person ID with success")
+    void shouldSetReadInfoByPersonIdWithSuccess() {
+        var personId = "person-id";
+        var isRead = true;
+        var eventMock = getEventMock();
+        var eventEntityMock = getEventEntityMock();
+
+        when(eventReaderDataBaseRepository.findByUserId(personId)).thenReturn(Optional.of(eventEntityMock));
+        when(eventDataProviderMapper.toEvent(eventEntityMock)).thenReturn(eventMock);
+        when(eventDataProviderMapper.toEventEntity(any(Event.class))).thenReturn(eventEntityMock);
+        when(eventReaderDataBaseRepository.save(any(EventEntity.class))).thenReturn(eventEntityMock);
+        when(eventDataProviderMapper.toEvent(eventEntityMock)).thenReturn(eventMock);
+
+        eventReaderByPostgresDataProvider.setReadInfoByPersonId(personId, isRead);
+
+    }
+
+    @Test
+    @DisplayName("Should fail to set read info by person ID if getByPersonId fails")
+    void shouldFailSetReadInfoByPersonIdWhenGetByPersonIdFails() {
+        var personId = "person-id";
+        var isRead = true;
+        var errorMessage = "Fail to update Event read status by event person id into the reader database - Fail: Fail to get an Event into the reader database by Person id - Fail: test - get by person id failure";
+
+        when(eventReaderDataBaseRepository.findByUserId(personId)).thenThrow(new RuntimeException("test - get by person id failure"));
+
+        var exception = assertThrows(DataBaseDataProviderException.class,
+                () -> eventReaderByPostgresDataProvider.setReadInfoByPersonId(personId, isRead));
+
+        assertNotNull(exception);
+        assertEquals(errorMessage, exception.getMessage());
+        verify(eventReaderDataBaseRepository, times(1)).findByUserId(personId);
+        verify(eventDataProviderMapper, never()).toEvent(any(EventEntity.class));
+        verify(eventDataProviderMapper, never()).toEventEntity(any(Event.class));
+        verify(eventReaderDataBaseRepository, never()).save(any(EventEntity.class));
+    }
+
+    @Test
+    @DisplayName("Should fail to set read info by person ID if save fails")
+    void shouldFailSetReadInfoByPersonIdWhenSaveFails() {
+        var personId = "person-id";
+        var isRead = true;
+        var eventMock = getEventMock();
+        var eventEntityMock = getEventEntityMock();
+        var errorMessage = "Fail to update Event read status by event person id into the reader database - Fail: Fail to save an Event into the reader database - Fail: test - save failure";
+
+        when(eventReaderDataBaseRepository.findByUserId(personId)).thenReturn(Optional.of(eventEntityMock));
+        when(eventDataProviderMapper.toEvent(eventEntityMock)).thenReturn(eventMock);
+        when(eventDataProviderMapper.toEventEntity(any(Event.class))).thenReturn(eventEntityMock);
+        when(eventReaderDataBaseRepository.save(any(EventEntity.class))).thenThrow(new RuntimeException("test - save failure"));
+
+        var exception = assertThrows(DataBaseDataProviderException.class,
+                () -> eventReaderByPostgresDataProvider.setReadInfoByPersonId(personId, isRead));
+
+        assertNotNull(exception);
+        assertEquals(errorMessage, exception.getMessage());
+    }
+
     private Event getEventMock() {
         return new Event(0,
                 "eventType",
