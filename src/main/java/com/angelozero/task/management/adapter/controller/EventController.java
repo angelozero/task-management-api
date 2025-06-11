@@ -64,4 +64,6 @@ public class EventController {
         }
         return ResponseEntity.noContent().build();
     }
+
+    // todo study with Verena
 }

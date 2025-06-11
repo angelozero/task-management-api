@@ -1,0 +1,69 @@
+Roadmap de Estudos para Desenvolvedora Android
+Módulo 1: Fundamentos da Programação
+Mesmo que o objetivo seja o Android, o básico de programação é essencial.
+
+Lógica de Programação:
+Conceitos: O que são algoritmos, variáveis, tipos de dados (inteiro, float, string, booleano), operadores (aritméticos, relacionais, lógicos).
+Estruturas de Controle: Condicionais (if/else, switch/when) e laços de repetição (for, while).
+Funções/Métodos: Como criar e usar.
+Ferramentas: Comece com pseudocódigo ou linguagens simples como Python (é ótima para iniciantes, bem legível) para praticar esses conceitos. Há muitos cursos online gratuitos de lógica de programação.
+Programação Orientada a Objetos (POO):
+Conceitos: Classes, objetos, atributos, métodos.
+Pilares: Encapsulamento, Herança, Polimorfismo, Abstração.
+Por que aprender POO?: O desenvolvimento Android moderno é fortemente baseado em POO.
+Módulo 2: Kotlin - A Linguagem do Android
+O Kotlin é a linguagem oficial e preferida para desenvolvimento Android.
+
+Sintaxe Básica: Variáveis (var, val), tipos de dados, operadores.
+Estruturas de Controle: if/else, when, for, while.
+Funções: Declaração, parâmetros, retorno.
+Classes e Objetos: Como criar classes, instanciar objetos, construtores, propriedades, métodos.
+Recursos Avançados (Iniciantes): Null safety (um dos grandes benefícios do Kotlin), extension functions, data classes.
+Onde aprender Kotlin: A documentação oficial do Kotlin é excelente, e há muitos tutoriais e cursos online.
+Módulo 3: Primeiros Passos no Desenvolvimento Android
+Aqui a diversão começa a ficar séria!
+
+Configuração do Ambiente:
+Instalação do Android Studio (IDE oficial).
+Configuração do SDK (Software Development Kit).
+Criação de um emulador Android (AVD - Android Virtual Device) ou configuração de um dispositivo físico para testes.
+Estrutura de um Projeto Android: Entenda as pastas app, gradle, res (layouts, drawables, strings, etc.) e o arquivo AndroidManifest.xml.
+Componentes Essenciais:
+Activity: A tela principal da sua aplicação.
+Layouts (XML): Como projetar a interface do usuário. Comece com LinearLayout e RelativeLayout, depois explore o ConstraintLayout.
+Views Comuns: TextView (texto), Button (botão), EditText (campo de entrada de texto), ImageView (imagem).
+Interagindo com Views: Como "ligar" os elementos visuais do XML ao código Kotlin e fazer o aplicativo responder a ações (cliques de botão, por exemplo).
+Ciclo de Vida da Activity: Entenda os métodos onCreate(), onStart(), onResume(), onPause(), onStop(), onDestroy(). É crucial para o bom funcionamento do seu app.
+Primeiro App (Hello World!): Crie um aplicativo simples que exiba um "Olá, Mundo!" ou um botão que mude um texto.
+Módulo 4: Interface do Usuário (UI) e Experiência do Usuário (UX)
+Aprenda a criar interfaces bonitas e funcionais.
+
+Layouts Mais Avançados:
+ConstraintLayout: Essencial para layouts flexíveis e responsivos.
+RecyclerView: Para exibir listas longas e dinâmicas de itens (lista de contatos, feed de notícias).
+Fragments: Componentes reutilizáveis da UI que podem ser combinados em uma Activity para criar interfaces mais complexas.
+Material Design: As diretrizes de design do Google para Android. Aprenda sobre cores, tipografia, ícones, elevação e componentes (CardView, AppBarLayout, FloatingActionButton).
+Navegação:
+Intents: Para iniciar outras Activities, abrir URLs, fazer chamadas, etc.
+Navigation Component: Uma biblioteca do Android para gerenciar a navegação entre telas.
+Módulo 5: Armazenamento de Dados e Comunicação
+Seu app precisará salvar e buscar informações.
+
+Armazenamento Local:
+SharedPreferences: Para salvar pequenas quantidades de dados-chave/valor (configurações do usuário, por exemplo).
+SQLite/Room Database: Para armazenar dados estruturados localmente. Room é uma biblioteca do Android que facilita muito o trabalho com SQLite.
+Conexão com a Internet (APIs):
+HTTP/REST: Entenda como os aplicativos se comunicam com servidores.
+Bibliotecas: Retrofit (para fazer chamadas de rede) e Glide/Picasso (para carregar imagens da web).
+JSON Parsing: Como converter dados JSON (um formato comum de dados da web) em objetos Kotlin e vice-versa.
+Módulo 6: Boas Práticas e Tópicos Avançados (Iniciais)
+Para fazer seu código escalável e eficiente.
+
+Padrões de Arquitetura:
+MVVM (Model-View-ViewModel): Um padrão muito comum no desenvolvimento Android moderno que ajuda a organizar o código e torná-lo mais testável e fácil de manter.
+Clean Architecture (Opcional, mas útil): Um conjunto de princípios que leva a uma arquitetura mais modular e independente.
+Coroutines (Kotlin): Para lidar com operações assíncronas (como chamadas de rede ou operações de banco de dados) de forma mais fácil e legível.
+Testes:
+Testes Unitários: Para testar partes isoladas do seu código (funções, classes).
+Testes de Instrumentação: Para testar componentes da UI.
+Controle de Versão (Git e GitHub/GitLab/Bitbucket): Essencial para trabalhar em equipe e gerenciar seu código. Aprenda os comandos básicos (clone, add, commit, push, pull).
