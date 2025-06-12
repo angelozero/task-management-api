@@ -14,17 +14,10 @@
 - 11 - Integrations tests (REST / GRAPHQL)
 - 12 - Cash to the service for PokeApi using Redis (Docker)
 - 13 - Sealed and non sealed class 
+- 14 - Dual datasource (DataSourceOrchestration.md)
 
 ## Doing
-- Dual datasource (DataSourceOrchestration.md)
-  - RabbitMQ (RabbitMQ.md)
-  - [img.png](images/rabbitmq-interface.png)
-  - Saves an event to the database ( write database )
-  - Triggers an event in the queue
-  - Consumes the event from the queue
-  - Saves the event to the second database ( read database )
-  - If a read service was triggered, updates the saved event in the second database ( read database )
-  - Consumes events from the second database for querying ( read database )
+  - Dynamic Beans (https://www.youtube.com/watch?v=ieTORk_jsVs&ab_channel=JavaTechie)
 
 ## To do
 - JWT Authentication with Keycloak

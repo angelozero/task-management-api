@@ -40,6 +40,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return generateUnprocessableEntityResponse(ex);
     }
 
+    @ExceptionHandler(DynamicBeanTypeException.class)
+    public ResponseEntity<Object> handleDynamicBeanTypeException(DynamicBeanTypeException ex) {
+        return generateUnprocessableEntityResponse(ex);
+    }
+
     @ExceptionHandler(FieldValidatorException.class)
     public ResponseEntity<Object> handleResourceFieldValidatorException(FieldValidatorException ex) {
         return generateUnprocessableEntityResponse(ex);
