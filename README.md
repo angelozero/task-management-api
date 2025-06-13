@@ -28,3 +28,5 @@
 
 - design patterns 
   - chain of responsibility!
+
+ today i was studding something from my work
