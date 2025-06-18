@@ -47,7 +47,22 @@ services:
 		volumes:
 			- postgres_writer_data:/var/lib/postgresql/data
 
-	rabbitmq: # Novo serviço para RabbitMQ
+	keycloak_postgres:
+		platform: linux/amd64
+		image: postgres:15-alpine
+		container_name: keycloak_postgres_db
+		ports:
+			- "5898:5432"
+		environment:
+			POSTGRES_DB: keycloak
+			POSTGRES_USER: keycloak
+			POSTGRES_PASSWORD: password
+		volumes:
+			- keycloak_postgres_data:/var/lib/postgresql/data
+		networks:
+			- keycloak-network
+
+	rabbitmq:
 		platform: linux/arm64/v8
 		image: rabbitmq:3-management-alpine
 		container_name: rabbitmq_broker
@@ -62,11 +77,41 @@ services:
 			RABBITMQ_DEFAULT_PASS: password
 			RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbitmq_management listeners '[{port,15672}]'"
 
+	keycloak:
+		image: keycloak/keycloak:25.0.0
+		container_name: keycloak_container
+		networks:
+			- keycloak-network
+		environment:
+			DB_VENDOR: postgres
+			DB_ADDR: keycloak_postgres
+			DB_PORT: 5432
+			DB_DATABASE: keycloak
+			DB_USER: sa
+			DB_PASSWORD: password
+			KEYCLOAK_ADMIN: admin
+			KEYCLOAK_ADMIN_PASSWORD: admin
+		#      use these parameters if your keycloak version is 26.x.x
+		#      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+		#      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+
+		ports:
+			- "8080:8080"
+		platform: linux/amd64
+		command: start-dev
+		depends_on:
+			- keycloak_postgres
+
 volumes:
 	mongo_data:
 	postgres_reader_data:
 	postgres_writer_data:
+	keycloak_postgres_data:
 	rabbitmq_data:
+
+networks:
+	keycloak-network:
+		driver: bridge
 
 # para executar um contentor num MacOs Sonoma 14.2.1 Apple M1 adicione "platform: linux/arm64/v8"
 # para executar o docker compose num MacOs Sonoma 14.2.1 Apple M1 use o comando docker-compose up -d
