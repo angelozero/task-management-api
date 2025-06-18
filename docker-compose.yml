@@ -96,7 +96,7 @@ services:
     #      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
 
     ports:
-      - "8080:8080"
+      - "9090:8080"
     platform: linux/amd64
     command: start-dev --debug
     depends_on:
