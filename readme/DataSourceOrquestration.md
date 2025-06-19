@@ -14,7 +14,7 @@ In a separate read and write architecture (CQRS - Command Query Responsibility S
 ### 2. Sequence Diagram
 [Distributed transaction patterns for microservices compared - by Bilgin Ibryam](https://developers.redhat.com/articles/2021/09/21/distributed-transaction-patterns-microservices-compared#choreography)
 
-![alt text](../images/datasource.png)
+![alt text](images/datasource.png)
 
 
 ### 3. Step Details
